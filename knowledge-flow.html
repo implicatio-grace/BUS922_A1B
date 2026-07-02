@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Knowledge Flow — Industry Partner Concept v6 (artefact v2.1)</title>
+  <title>BUS922 A1B · The originating concept — knowledge flow</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,21 +112,31 @@ a { color: inherit; }
 .shell { max-width: 1480px; margin: 0 auto; padding: 0 32px; position: relative; }
 .section { padding: 96px 0; position: relative; }
 .section + .section { border-top: 1px solid var(--rule-soft); }
+@media (min-width: 1081px) { .arch-card { margin-right: clamp(28px, 4.5vw, 84px); } }
 
 /* Figure index rail */
-.fig-index { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 45; display: flex; flex-direction: column; gap: 1px; padding: 12px 6px 12px 10px; font-family: var(--mono); border-radius: 0 8px 8px 0; transition: background .25s ease, box-shadow .25s ease; }
-.fig-index:hover { background: rgba(255,252,245,0.96); box-shadow: 3px 0 28px rgba(31,42,55,0.10); }
-.fig-index::before { content: ""; position: absolute; left: 15px; top: 18px; bottom: 18px; width: 1px; background: var(--rule); }
-.fig-index-item { position: relative; display: flex; align-items: center; background: none; border: none; cursor: pointer; padding: 7px 0; color: var(--ink-soft); transition: color .2s ease; }
+.fig-index { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 45; display: flex; flex-direction: column; gap: 1px; padding: 12px 10px 12px 6px; font-family: var(--mono); border-radius: 8px 0 0 8px; transition: background .25s ease, box-shadow .25s ease; }
+.fig-index:hover { background: rgba(255,252,245,0.96); box-shadow: -3px 0 28px rgba(31,42,55,0.10); }
+.fig-index::before { content: ""; position: absolute; right: 15px; top: 18px; bottom: 18px; width: 1px; background: var(--rule); }
+.fig-index-item { position: relative; display: flex; flex-direction: row-reverse; align-items: center; background: none; border: none; cursor: pointer; padding: 7px 0; color: var(--ink-soft); transition: color .2s ease; }
 .fig-index-dot { position: relative; z-index: 1; flex: none; width: 9px; height: 9px; border-radius: 50%; border: 1.4px solid var(--ink-soft); background: var(--paper); transition: all .25s ease; }
-.fig-index-text { display: inline-flex; align-items: baseline; gap: 8px; white-space: nowrap; font-size: 10px; letter-spacing: 1.1px; text-transform: uppercase; max-width: 0; margin-left: 0; opacity: 0; overflow: hidden; transition: max-width .35s ease, margin-left .35s ease, opacity .25s ease; }
+.fig-index-text { display: inline-flex; align-items: baseline; justify-content: flex-end; text-align: right; gap: 8px; white-space: nowrap; font-size: 10px; letter-spacing: 1.1px; text-transform: uppercase; max-width: 0; margin-right: 0; opacity: 0; overflow: hidden; transition: max-width .35s ease, margin-right .35s ease, opacity .25s ease; }
 .fig-index-num { font-size: 8.5px; opacity: 0.55; }
-.fig-index:hover .fig-index-text { max-width: 240px; margin-left: 11px; opacity: 1; }
+.fig-index:hover .fig-index-text { max-width: 240px; margin-right: 11px; opacity: 1; }
 .fig-index-item:hover { color: var(--ink); }
 .fig-index-item:hover .fig-index-dot { border-color: var(--marine); }
 .fig-index-item.active { color: var(--ink); }
 .fig-index-item.active .fig-index-dot { border-color: var(--marine); background: var(--marine); box-shadow: 0 0 0 3px rgba(19,58,92,0.13); }
-@media (max-width: 1080px) { .fig-index { display: none; } }
+@media (max-width: 1080px) {
+  .fig-index { top: auto; bottom: 14px; left: 0; right: 0; margin: 0 auto; width: max-content; max-width: calc(100vw - 24px); transform: none; flex-direction: row; align-items: center; gap: 2px; padding: 8px 11px; border-radius: 999px; background: rgba(255,252,245,0.95); box-shadow: 0 6px 24px rgba(31,42,55,0.16); }
+  .fig-index::before { display: none; }
+  .fig-index-item { flex-direction: column; padding: 11px 9px; }
+  .fig-index-text { display: none; }
+  .fig-index-dot { width: 8px; height: 8px; }
+  .fig-index-item.active .fig-index-dot { transform: scale(1.15); }
+  .fig-index-item.active .fig-index-text { display: inline-flex; justify-content: center; position: fixed; left: 0; right: 0; bottom: 64px; margin: 0 auto; width: max-content; max-width: calc(100vw - 32px); transform: none; max-height: none; opacity: 1; overflow: visible; background: rgba(28,28,26,0.94); color: #fbfaf6; padding: 4px 12px; border-radius: 999px; font-size: 10px; letter-spacing: 1.1px; box-shadow: 0 4px 16px rgba(31,42,55,0.18); pointer-events: none; transition: none; }
+  .fig-index-item.active .fig-index-num { display: none; }
+}
 
 /* Crosshair / compass corner ornaments */
 .frame-cross {
@@ -283,6 +293,8 @@ input[type="range"].chart-slider::-moz-range-thumb { width: 14px; height: 14px; 
 }
 
 /* Footer */
+.reflink{display:inline-block;margin-top:14px;padding-bottom:2px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7872;text-decoration:none;border-bottom:1px solid #bdb8aa;transition:color .14s,border-color .14s;}
+.reflink:hover{color:#1c1c1a;border-color:#1c1c1a;}
 .footer {
   font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft);
   letter-spacing: 0.04em;
@@ -1459,7 +1471,7 @@ function TripleDuty({ register }) {
     <div className="col gap-24">
       <div className="flex between center wrap gap-16">
         <div>
-          <div className="eyebrow">Connective tissue · v6</div>
+          <div className="eyebrow">Connective tissue</div>
           <h2 className="display" style={{ marginTop: 6 }}>One manifest, four duties.</h2>
         </div>
         <span className="coord mono">designed once at point of creation → used four ways downstream</span>
@@ -1588,7 +1600,7 @@ function ReflectionArchitecture({ register }) {
     <div className="col gap-24">
       <div className="flex between center wrap gap-16">
         <div>
-          <div className="eyebrow">Reflection architecture · v6 §6.2 · two levels</div>
+          <div className="eyebrow">Reflection architecture · two levels</div>
           <h2 className="display" style={{ marginTop: 6 }}>How each cycle gets better.</h2>
         </div>
         <span className="coord mono">single-loop at each station · double-loop across cohorts</span>
@@ -1944,7 +1956,7 @@ function AcquisitionSlider({ cycle, setCycle }) {
         <span className="chip"><span className="dot" style={{ background: "var(--copper)" }}></span>hard to replicate</span>
         <span className="chip"><span className="dot" style={{ background: "var(--signal)" }}></span>cannot be purchased or shortcut</span>
         <div className="small muted" style={{ flex: "1 1 220px", minWidth: 220 }}>
-          Artefact specs, cluster rules, innovation-pipeline sophistication, and cohort-level integration intelligence all accumulate. Time is a compounding factor, not just a dimension — and the longer the system runs, the harder it is for anyone else to catch up. <span className="mono tiny muted">(v6 §8.2)</span>
+          Artefact specs, cluster rules, innovation-pipeline sophistication, and cohort-level integration intelligence all accumulate. Time is a compounding factor, not just a dimension — and the longer the system runs, the harder it is for anyone else to catch up.
         </div>
       </div>
     </div>
@@ -2153,7 +2165,7 @@ function App() {
 
         <div className="flex between center wrap gap-16" style={{ marginBottom: 28 }}>
           <div className="flex center gap-12">
-            <span className="chip"><span className="dot"></span>BUS922 · CONCEPT v6 · v2.1</span>
+            <span className="chip"><span className="dot"></span>BUS922 · CONCEPT</span>
             <span className="coord">MAY 2026 · 14°S / 142°E</span>
           </div>
           <div className="flex center gap-12">
@@ -2277,15 +2289,15 @@ function App() {
             </p>
           </div>
 
-          <div className="card" style={{ flex: "1 1 360px", maxWidth: 620, padding: 28 }}>
+          <div className="card arch-card" style={{ flex: "1 1 360px", maxWidth: 620, padding: 28 }}>
             <div className="corner tl"></div><div className="corner tr"></div>
             <div className="corner bl"></div><div className="corner br"></div>
-            <div className="eyebrow">Framework architecture · v6 §6.1</div>
+            <div className="eyebrow">Framework architecture</div>
             <h3 className="display" style={{ marginTop: 6, fontSize: 22, lineHeight: 1.15 }}>
               One integrating theory, three layer cores, one bridge, one lens.
             </h3>
             <p className="small muted" style={{ marginTop: 8 }}>
-              v5's structural promotion, carried into v6: SECI carries the spine; layer-specific theories govern within each layer; absorptive capacity bridges M&amp;A ↔ KM without occupying a core slot; Maynard's transition framework rides alongside as a supplementary analytical lens. v6 elevates &ldquo;contribution is the mechanism of belonging&rdquo; to a named cross-cutting design principle.
+              SECI carries the spine; layer-specific theories govern within each layer; absorptive capacity bridges M&amp;A ↔ KM without occupying a core slot; Maynard's transition framework rides alongside as a supplementary analytical lens. &ldquo;Contribution is the mechanism of belonging&rdquo; is a named cross-cutting design principle.
             </p>
             <ul style={{ margin: "16px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
               {[
@@ -2295,7 +2307,7 @@ function App() {
                 { role: "Cross-cutting",      theory: "AMO (Appelbaum et al.)",  fn: "Ability · motivation · opportunity conditions across all three layers.", color: "var(--ink-soft)", gov: "" },
                 { role: "Layer 3 core",       theory: "EDI",                     fn: "Employee-driven innovation through structured idea development on the innovation management platform.", color: "var(--signal)", gov: "Platform-provided stage-gate governance; role assignment is recommendation-level" },
                 { role: "Bridge concept",     theory: "Absorptive capacity (Cohen & Levinthal)", fn: "Explains why the self-reinforcing mechanism compounds; connects M&A integration ↔ KM. Bridge — not core — to avoid defending full SME operationalisation of a large-firm construct.", color: "var(--ink-2)", gov: "" },
-                { role: "Supplementary lens", theory: "Maynard (2015a, 2020, 2024a, 2024b)", fn: "Two contributions, kept distinct (v6 §5.9): (1) tipping-point logic — Pippard's Ladder, grounded in Maynard's 2015a peer-reviewed risk-innovation work and Scheffer et al. (2012) — the motivational 'why preventive'; (2) threat–opportunity mapping (2024a/b) — the analytical transition-landscape tool. A peer-reviewed concept extended through practitioner thought leadership; analytical tool, not a theoretical pillar.", color: "var(--copper)", gov: "" },
+                { role: "Supplementary lens", theory: "Maynard (2015a, 2020, 2024a, 2024b)", fn: "Two contributions, kept distinct: (1) tipping-point logic — Pippard's Ladder, grounded in Maynard's 2015a peer-reviewed risk-innovation work and Scheffer et al. (2012) — the motivational 'why preventive'; (2) threat–opportunity mapping (2024a/b) — the analytical transition-landscape tool. A peer-reviewed concept extended through practitioner thought leadership; analytical tool, not a theoretical pillar.", color: "var(--copper)", gov: "" },
               ].map((row) => (
                 <li key={row.role} style={{ display: "grid", gridTemplateColumns: "128px 1fr", gap: 12, borderBottom: "1px solid var(--rule-soft)", paddingBottom: 8 }}>
                   <span className="mono tiny" style={{ letterSpacing: 1.4, color: row.color, alignSelf: "start" }}>{row.role.toUpperCase()}</span>
@@ -2311,18 +2323,17 @@ function App() {
                 </li>
               ))}
             </ul>
-            <div className="tiny mono muted" style={{ marginTop: 12, letterSpacing: 0.6 }}>
-              Governance notes drawn from v6 §8.1. Carried-forward decisions (title refinement, searches D4 + D5) live in the project MANIFEST.
-            </div>
           </div>
         </div>
       </section>
 
       <footer className="shell footer">
-        <div className="flex between center wrap gap-16">
-          <span>BUS922 · Kali Madden · Trimester 2, 2026 · Industry Partner</span>
-          <span>visualisation v2.1 · v6 reconciliation · SECI spine · reflection architecture · quadruple-duty metadata · Maynard bifurcation · framework table</span>
+        {/* build metadata (not public): visualisation v2.1 · v6 reconciliation · SECI spine · reflection architecture · quadruple-duty metadata · Maynard bifurcation · framework table */}
+        <div>
+          Kali Madden · BUS922 A1B · Dr Nelly Liyanagamage · July 2026<br/>
+          The originating concept · Learn → Share → Innovate · best viewed on a laptop or desktop
         </div>
+        <a className="reflink" href="references-bibliography.html">References &amp; bibliography →</a>
       </footer>
 
       {/* Tweaks panel */}
