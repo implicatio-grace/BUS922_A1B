@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BUS922 A1B · Evidence landscape v2 · horizontal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f5f1;--paper:#fbfaf6;--ink:#1c1c1a;--ink-2:#3b3a36;--muted:#7a7872;--muted-2:#9a9890;
+    --line:#d8d4ca;--line-2:#bdb8aa;
+    --grey:#5F5E5A;--grey-fill:#F1EFE8;
+    --navy:#133A5C;--navy-fill:#E7EDF3;
+    --teal:#0F6E56;--teal-fill:#E1F5EE;--teal-fill-2:#EFF8F4;
+    --coral:#993C1D;--coral-fill:#FAECE7;
+    --green:#0F6E56;--amber:#9A6A1E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1280px;margin:0 auto;padding:48px 30px 240px;}
+  .back{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-block;margin-bottom:24px;}
+  .back:hover{color:var(--ink);}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:0.16em;color:var(--grey);}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:34px;line-height:1.12;
+    letter-spacing:-0.015em;margin:13px 0 0;text-wrap:balance;}
+  .lede{color:var(--muted);font-size:14.5px;line-height:1.65;max-width:84ch;margin:15px 0 0;}
+  .lede b{color:var(--ink-2);font-weight:500;}
+
+  /* ---- top bar: gate + legend ---- */
+  .bar{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:24px 0 0;
+    padding:14px 18px;background:var(--paper);border:1px solid var(--line);border-radius:12px;}
+  .gate{display:flex;align-items:baseline;gap:9px;}
+  .gate .n{font-family:"Fraunces",Georgia,serif;font-size:30px;color:var(--green);line-height:1;}
+  .gate .lab{font-size:12px;color:var(--ink-2);line-height:1.4;max-width:34ch;}
+  .gate .lab b{color:var(--ink);}
+  .gate.ft .n{color:var(--navy);}
+  .spacer{flex:1;min-width:10px;}
+  .legend{display:flex;gap:7px 16px;flex-wrap:wrap;font-size:10.5px;color:var(--muted);align-items:center;}
+  .legend .it{display:inline-flex;gap:6px;align-items:center;white-space:nowrap;}
+  .legend .sw{width:11px;height:11px;border-radius:3px;}
+  .legend svg{display:block;}
+
+  /* ---- toolbar ---- */
+  .toolbar{margin:12px 0 0;display:flex;flex-direction:column;gap:10px;
+    padding:14px 18px;background:var(--paper);border:1px solid var(--line);border-radius:12px;}
+  .trow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;}
+  .tlabel{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--muted-2);margin-right:4px;}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:0.02em;
+    border:1px solid var(--line-2);background:#fff;color:var(--ink-2);border-radius:7px;
+    padding:6px 11px;cursor:pointer;transition:.14s;line-height:1;}
+  .chip:hover{border-color:var(--grey);}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .chip.convo-chip.on{background:var(--coral);border-color:var(--coral);}
+  .chip.chain-chip{border-style:dashed;}
+  .chip.chain-chip.on{background:var(--teal);border-color:var(--teal);}
+  .seg{display:inline-flex;border:1px solid var(--line-2);border-radius:7px;overflow:hidden;}
+  .seg .chip{border:0;border-radius:0;border-right:1px solid var(--line-2);}
+  .seg .chip:last-child{border-right:0;}
+  .toggle{font-family:"JetBrains Mono",monospace;font-size:11px;border:1px solid var(--line-2);
+    background:#fff;color:var(--ink-2);border-radius:7px;padding:6px 11px;cursor:pointer;
+    display:inline-flex;gap:8px;align-items:center;transition:.14s;}
+  .toggle:hover{border-color:var(--green);}
+  .toggle.on{background:var(--teal-fill);border-color:var(--green);color:var(--green);}
+  .toggle .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor;}
+  .toggle.on .dot{background:var(--green);}
+
+  /* ---- diagram ---- */
+  #diagram{position:relative;margin-top:18px;}
+  #links{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible;}
+  .edge{fill:none;stroke:var(--ink-2);opacity:.85;transition:opacity .2s;}
+  .edge.mechanistic{stroke-width:2.4;}
+  .edge.defensible{stroke-width:1.8;opacity:.7;}
+  .edge.interpretive{stroke-width:1.3;opacity:.6;}
+  .edge.consistent-with{stroke-width:1.2;stroke-dasharray:3 4;opacity:.6;}
+  .edge.chain{stroke:var(--teal);stroke-width:2.6;opacity:.9;}
+  .edge.hl{stroke:var(--coral);stroke-width:2.6;opacity:.95;}
+  .edge.resting{opacity:.15;stroke-width:1.3;}
+  .edge.resting.chain{opacity:.32;stroke-width:1.7;}
+  .edge.resting.hl{opacity:.24;stroke-width:1.6;}
+  .edge.hoveredge{opacity:.95;}
+  .node.hdim,.lens.hdim,.lane-head.hdim{opacity:.2;}
+
+  .band{position:relative;z-index:2;margin-top:14px;}
+  .blab{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--muted);margin:22px 0 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .blab .reg{padding:2px 9px;border-radius:5px;font-size:9px;letter-spacing:0.08em;}
+  .reg.grey{background:var(--grey-fill);color:var(--grey);}
+  .reg.navy{background:var(--navy-fill);color:var(--navy);}
+  .reg.design{background:var(--teal-fill);color:var(--teal);}
+  .reg.coral{background:var(--coral-fill);color:var(--coral);}
+  .blab .hint{color:var(--muted-2);text-transform:none;letter-spacing:0;font-size:11.5px;font-style:italic;}
+
+  /* grey instrument lenses */
+  #instruments{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .lens{background:#fff;border:1px solid var(--line);border-radius:11px;padding:15px 16px;cursor:pointer;
+    border-left:3px solid var(--grey);transition:.16s;}
+  .lens:hover,.lens.active{box-shadow:0 10px 26px -18px rgba(0,0,0,.45);border-color:var(--grey);}
+  .lens-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+  .lens-head h4{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:19px;margin:0;color:#2C2C2A;white-space:nowrap;}
+  .owns{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--grey);text-align:right;}
+  .lens-sub{font-size:11px;color:var(--grey);margin:1px 0 9px;}
+  .lens-find{font-size:11.5px;line-height:1.5;color:var(--ink-2);}
+  .lens-find .conf{display:block;margin-top:6px;font-style:italic;color:var(--grey);font-size:10.5px;}
+  .gsrc{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:11px;
+    padding-top:10px;border-top:1px solid rgba(95,94,90,.25);}
+  .gsrc-lab{font-family:"JetBrains Mono",monospace;font-size:8px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--muted-2);}
+  .gchip{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.01em;
+    background:#fff;border:1px solid var(--line-2);color:var(--grey);border-radius:5px;padding:3px 7px;
+    text-decoration:none;cursor:pointer;display:inline-flex;gap:4px;align-items:center;transition:.12s;}
+  .gchip:hover{border-color:var(--grey);color:var(--ink);}
+  .gchip .ext{opacity:.5;font-size:8px;}
+  .gchip.dir{opacity:.7;border-style:dashed;}
+  .gchip.nolink{font-family:"JetBrains Mono",monospace;}
+  .figlink{display:inline-flex;gap:5px;align-items:center;margin-top:11px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--grey);text-decoration:none;border-bottom:1px solid transparent;transition:.14s;}
+  .figlink:hover{color:var(--ink);border-bottom-color:var(--line-2);}
+  .figlink .ext{opacity:.6;font-size:9px;}
+
+  /* generic node chips */
+  .nodes{display:flex;gap:9px;flex-wrap:wrap;}
+  .node{display:inline-flex;align-items:center;gap:9px;border-radius:8px;padding:8px 12px;
+    border:1px solid var(--line-2);border-left-width:3px;background:#fff;cursor:pointer;transition:.14s;
+    font-size:12.5px;color:var(--ink-2);font-family:inherit;text-align:left;}
+  .node:hover,.node.active{transform:translateY(-1px);box-shadow:0 8px 20px -14px rgba(0,0,0,.45);}
+  .node .rk{width:9px;height:9px;border-radius:50%;flex:none;background:var(--amber);}
+  .node.green .rk{background:var(--green);}
+  .node .ref{line-height:1.25;}
+  .node .yr{color:var(--muted);font-variant-numeric:tabular-nums;}
+  .node .rankdots{font-size:8px;letter-spacing:1px;color:var(--green);line-height:1;}
+  .node.amber .rankdots,.node .rankdots.none{color:var(--muted-2);}
+  .node .ft50{font-family:"JetBrains Mono",monospace;font-size:7.5px;letter-spacing:0.06em;
+    background:var(--navy);color:#fff;border-radius:3px;padding:1px 4px;}
+  .node[data-register="problem"]{border-left-color:var(--navy);}
+  .node[data-register="design"]{border-left-color:var(--teal);}
+  .node[data-register="critical"]{border-left-color:var(--coral);}
+  .node[data-register="postA3"]{border-left-color:var(--muted-2);border-style:dashed;}
+  .node.frame{background:#fcfbf8;}
+  .node.fenced,.node.suppl{opacity:.82;}
+  .node.dim-perm{opacity:.6;}
+  .node.dim{opacity:.16;filter:grayscale(.5);pointer-events:none;}
+  .lens.dim{opacity:.16;filter:grayscale(.5);}
+
+  /* design lanes */
+  #designLanes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:start;}
+  .lane{background:#fff;border:1px solid var(--line);border-top:2px solid var(--teal);border-radius:12px;padding:13px 13px 14px;
+    display:flex;flex-direction:column;transition:.16s;}
+  .lane.headline{border-color:var(--teal);background:var(--teal-fill-2);box-shadow:0 12px 32px -24px rgba(15,110,86,.5);}
+  .lane-head{cursor:pointer;}
+  .lane-id{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.06em;color:var(--teal);
+    display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .hbadge{background:var(--coral);color:#fff;border-radius:4px;padding:1px 6px;font-size:8px;letter-spacing:0.08em;}
+  .lane-head h3{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:17px;line-height:1.16;
+    margin:7px 0 0;color:#04342C;}
+  .lane-gist{font-size:11px;line-height:1.5;color:var(--ink-2);margin:8px 0 0;}
+  .lane-nodes{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
+  .lane-nodes .node{width:100%;}
+
+  /* hinge — calm: paper ground, soft left accent, muted coral (companion recipe) */
+  .hinge{position:relative;z-index:2;margin-top:16px;background:color-mix(in oklch, var(--coral) 3.5%, var(--paper));
+    border:1px solid var(--line);border-left:3px solid color-mix(in oklch, var(--coral) 42%, var(--line));
+    border-radius:10px;padding:17px 22px;}
+  .hinge .tag{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.1em;
+    text-transform:uppercase;color:color-mix(in oklch, var(--coral) 60%, var(--muted));}
+  .hinge-legs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 0;}
+  .leg{background:#fff;border:1px solid var(--coral);border-radius:8px;padding:9px 11px;}
+  .leg .k{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--coral);}
+  .leg .v{font-size:11px;line-height:1.45;color:#712B13;margin-top:4px;}
+  .hinge .gap{font-family:"Fraunces",Georgia,serif;font-size:18px;line-height:1.45;color:#3a2c25;
+    margin:13px 0 0;max-width:78ch;text-wrap:pretty;}
+  .hinge .gap em{font-style:italic;color:color-mix(in oklch, var(--coral) 68%, var(--muted));}
+  .hinge .note{font-size:11.5px;color:var(--ink-2);opacity:.9;margin:10px 0 0;max-width:74ch;font-style:italic;}
+  .hinge .defer{margin:13px 0 0;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.04em;
+    text-transform:uppercase;color:color-mix(in oklch, var(--coral) 55%, var(--muted));opacity:.9;border-top:1px dashed var(--line);padding-top:11px;}
+  .hinge .defer b{font-weight:500;}
+  .triple{margin:11px 0 0;display:inline-flex;gap:9px;align-items:center;background:var(--paper);
+    border:1px dashed color-mix(in oklch, var(--coral) 30%, var(--line));
+    border-radius:8px;padding:8px 12px;cursor:default;}
+  .triple .tk{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in oklch, var(--coral) 55%, var(--muted));}
+  .triple .tv{font-size:11.5px;color:var(--ink-2);}
+  .triple .tv b{font-family:"Fraunces",serif;font-weight:400;font-style:italic;}
+
+  /* flow ticks */
+  .tick{position:relative;z-index:2;display:flex;justify-content:center;color:var(--muted-2);font-size:18px;margin:8px 0 2px;}
+
+  /* convo banner */
+  #convo-banner{display:none;position:relative;z-index:2;margin:6px 0 0;background:#fff;
+    border:1px solid var(--coral);border-left-width:3px;border-radius:10px;padding:13px 17px;}
+  .cname{font-family:"Fraunces",serif;font-size:16px;color:#4A1B0C;}
+  .clin{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.06em;color:var(--coral);margin-left:10px;}
+  .cdesc{font-size:12px;line-height:1.55;color:var(--ink-2);margin-top:7px;max-width:92ch;}
+
+  /* detail panel */
+  .panel{position:fixed;left:0;right:0;bottom:0;background:rgba(251,250,246,.97);
+    border-top:1px solid var(--line);backdrop-filter:blur(8px);z-index:50;
+    box-shadow:0 -12px 30px -22px rgba(0,0,0,.4);}
+  .panel-in{max-width:1280px;margin:0 auto;padding:15px 30px 17px;display:flex;gap:26px;align-items:flex-start;}
+  .panel .meta{flex:none;width:172px;}
+  .rankchip{display:inline-flex;gap:7px;align-items:center;font-family:"JetBrains Mono",monospace;
+    font-size:10.5px;border-radius:7px;padding:6px 10px;border:1px solid;line-height:1.3;}
+  .rankchip.green{color:var(--green);border-color:rgba(15,110,86,.4);background:var(--teal-fill-2);}
+  .rankchip.amber{color:var(--amber);border-color:rgba(154,106,30,.4);background:#F6EEDC;}
+  .rankchip.grey{color:var(--grey);border-color:var(--line-2);background:var(--grey-fill);}
+  .rankchip .dots{letter-spacing:1px;}
+  .reglab{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--muted);margin-top:9px;line-height:1.5;}
+  .panel .body{flex:1;min-width:0;}
+  .panel .ttl{font-family:"Fraunces",Georgia,serif;font-size:17px;line-height:1.3;color:var(--ink);margin:0;}
+  .panel .ttl .yr{color:var(--muted);font-size:14px;}
+  .panel .role{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin:7px 0 0;max-width:108ch;}
+  .panel .role b{color:var(--teal);font-weight:600;}
+  .panel .role .conf{color:var(--grey);font-style:italic;}
+  .panel .role.cite{font-family:"Inter",sans-serif;color:var(--muted);font-size:12px;}
+
+  .foot{position:relative;z-index:2;margin-top:38px;font-family:"JetBrains Mono",monospace;
+    font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-2);line-height:1.9;}
+
+  @media (max-width:1080px){
+    #instruments{grid-template-columns:1fr;}
+    #designLanes{grid-template-columns:1fr 1fr;}
+    .hinge-legs{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){#designLanes{grid-template-columns:1fr;}.panel-in{flex-direction:column;gap:10px;}.panel .meta{width:auto;}}
+  @media print{html,body{background:#fff;}.toolbar,.bar,.back{display:none;}.node.dim,.lens.dim{opacity:1;filter:none;}}
+
+  /* ============================================================
+     HORIZONTAL LAYOUT (v2) — overrides the vertical bands
+     ============================================================ */
+  .wrap{max-width:1820px;}
+  .hscroll{overflow-x:auto;overflow-y:visible;padding-bottom:8px;position:relative;}
+  .hstack{display:flex;flex-direction:column;gap:24px;}
+  .hrow{display:flex;gap:16px;align-items:flex-start;min-width:max-content;}
+  .hrow.lower{gap:16px;}
+  .hcol{display:flex;flex-direction:column;gap:0;}
+  .gapcol{width:264px;flex:none;}
+  .hingecol{width:300px;flex:none;}
+  .widecol{width:430px;flex:none;}
+  .colhead{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 12px;display:flex;gap:9px;align-items:center;flex-wrap:wrap;line-height:1.5;}
+  .colhead .reg{padding:3px 9px;border-radius:5px;font-size:9.5px;letter-spacing:0.06em;}
+  .colhead .hint{text-transform:none;letter-spacing:0;font-style:italic;color:var(--muted-2);font-size:10.5px;}
+  .subhead{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--muted-2);margin:16px 0 8px;display:flex;gap:7px;align-items:baseline;flex-wrap:wrap;}
+  .subhead:first-of-type{margin-top:0;}
+  .subhead .hint{text-transform:none;letter-spacing:0;font-style:italic;font-size:10px;}
+  .subhead.navy{color:var(--navy);}
+
+  /* compact grey lenses — (legacy: when in a narrow column) */
+  #instruments{display:flex;flex-direction:column;gap:8px;}
+  .gapcol .lens{padding:11px 12px;border-radius:9px;}
+  .gapcol .lens .lens-sub,.gapcol .lens .lens-find{display:none;}
+  .gapcol .lens .lens-head{align-items:center;}
+  .gapcol .lens .lens-head h4{font-size:16px;}
+  .gapcol .lens .owns{display:none;}
+  .gapcol .lens .gsrc{margin-top:9px;padding-top:9px;}
+
+  /* FOUNDATION — environment scan as full-width bedrock */
+  .foundation{width:100%;background:color-mix(in oklch, var(--grey) 5%, var(--paper));
+    border:1px solid var(--line);border-top:3px solid color-mix(in oklch, var(--grey) 40%, var(--line));
+    border-radius:11px;padding:16px 18px 18px;}
+  .foundation .colhead{margin-bottom:13px;}
+  .foundation #instruments{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .foundation .lens{background:var(--paper);}
+
+  /* problem academic nodes stack vertically in the narrow gap column */
+  .nodes.vert{flex-direction:column;gap:8px;}
+  .nodes.vert .node{width:100%;}
+
+  /* design pipeline — the four DP lanes become the right-hand columns */
+  #designLanes{display:flex;flex-direction:row;gap:16px;}
+  .desgroup{display:flex;flex-direction:column;}
+  .desgroup .colhead.design{margin-bottom:12px;}
+  #designLanes .lane{width:236px;flex:none;}
+
+  /* hinge fits its column */
+  .hingecol .hinge{margin-top:0;}
+  .hingecol .hinge .gap{font-size:16px;}
+
+  /* lower band cards wrap */
+  .hrow.lower .nodes{display:flex;flex-wrap:wrap;gap:8px;}
+
+  @media print{.hscroll{overflow:visible;}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="index.html">&larr; Index</a>
+    <div class="eyebrow">BUS922 A1B</div>
+    <h1>The evidence landscape</h1>
+    <p class="lede">The same evidence, read <b>left to right</b>: the <b>problem &mdash; the gap</b> (the industry scan + the academic mergers-and-acquisitions research) opens into <b>the synthesis</b>, which opens into <b>the design pipeline</b> (DP1 &rarr; DP4). Every paper is a dot: hover or click for its standing and role. The faint web shows how they relate; hover any paper to light up its connections, or trace the <b>seven conversations</b> from the toolbar. <b>Parallel horizontal cut of v1 &mdash; for comparison.</b></p>
+
+    <div class="bar">
+      <div class="gate"><span class="n" id="gateN">22</span>
+        <span class="lab"><b>journal articles clear the gate</b> &mdash; ABDC A*/A or SCImago Q1 (21 conservative; same-dataset relational pair counted once). Above the 12+ aim and &ge;10 floor.</span></div>
+      <div class="gate ft"><span class="n" id="ft50N">7</span>
+        <span class="lab"><b>FT50</b> among them. Grey instruments are environment-scan &mdash; <b>not</b> gate-counted.</span></div>
+      <div class="spacer"></div>
+      <div class="legend">
+        <span class="it"><span class="sw" style="background:var(--grey)"></span>grey-lit</span>
+        <span class="it"><span class="sw" style="background:var(--navy)"></span>academic problem</span>
+        <span class="it"><span class="sw" style="background:var(--teal)"></span>design</span>
+        <span class="it"><span class="sw" style="background:var(--coral)"></span>critical / hinge</span>
+        <span class="it"><span style="color:var(--green);font-size:8px;letter-spacing:1px">●●●●</span> tier (ABDC/SCImago)</span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="trow">
+        <span class="tlabel">Focus</span>
+        <button class="chip on" data-focus="all">All</button>
+        <button class="chip" data-focus="dp1">DP1</button>
+        <button class="chip" data-focus="dp2">DP2</button>
+        <button class="chip" data-focus="dp3">DP3</button>
+        <button class="chip" data-focus="dp4">DP4</button>
+        <button class="chip" data-focus="problem">Problem</button>
+        <button class="chip" data-focus="design">Design</button>
+        <button class="chip" data-focus="critical">Critical</button>
+        <button class="chip" data-focus="grey">Grey</button>
+        <span style="flex:1"></span>
+        <span class="tlabel">Register</span>
+        <span class="seg">
+          <button class="chip on" data-reg="both">Both</button>
+          <button class="chip" data-reg="problem">Problem</button>
+          <button class="chip" data-reg="design">Design</button>
+        </span>
+        <button class="toggle" id="gateToggle"><span class="dot"></span>Gate-clearing only</button>
+      </div>
+      <div class="trow">
+        <span class="tlabel">Conversations</span>
+        <button class="chip convo-chip" data-convo="cA">both ends settled</button>
+        <button class="chip convo-chip" data-convo="cB">structuring supplied</button>
+        <button class="chip convo-chip" data-convo="cC">by-product spine</button>
+        <button class="chip convo-chip" data-convo="cD">don&rsquo;t decontextualise</button>
+        <button class="chip convo-chip" data-convo="cE">imported-warrant survival</button>
+        <button class="chip convo-chip" data-convo="cF">cross-disciplinary ★</button>
+        <button class="chip convo-chip" data-convo="cG">all point to capability</button>
+        <button class="chip convo-chip chain-chip" data-convo="chain">&rarr; Causal chain</button>
+      </div>
+      <div class="trow">
+        <span class="tlabel">Edge</span>
+        <span class="legend">
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="2.4"/></svg> mechanistic</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="1.8" opacity=".7"/></svg> defensible</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="1.3" opacity=".6"/></svg> interpretive</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="1.2" stroke-dasharray="3 4" opacity=".6"/></svg> consistent-with</span>
+        </span>
+      </div>
+    </div>
+
+    <div id="diagram">
+      <div class="hscroll">
+        <svg id="links" aria-hidden="true"></svg>
+        <div class="hstack">
+        <div class="hrow">
+
+          <!-- COLUMN 1 · THE GAP · academic warrant -->
+          <div class="hcol gapcol">
+            <div class="colhead"><span class="reg navy">The problem · the gap</span></div>
+            <div class="subhead navy">Academic warrant <span class="hint">serial-acquisition / codification</span></div>
+            <div class="nodes vert" id="problemNodes"></div>
+          </div>
+
+          <!-- COLUMN 2 · THE HINGE -->
+          <div class="hcol hingecol">
+            <div class="colhead"><span class="reg coral">The synthesis</span></div>
+            <div class="hinge" data-id="hinge">
+              <div class="tag">The hinge &middot; where the gap meets the design</div>
+              <!-- A2: worked TOWS 2x2 — DEFERRED to A2 (presentation stage). A1B carries only the W×O proposition below.
+                   Restore for A2 by un-commenting this block (markup preserved verbatim).
+              <div class="hinge-legs">
+                <div class="leg"><div class="k">O · opportunity</div><div class="v">PESTEL (Technological) &mdash; automation/GenAI mature enough for low-friction by-product capture; incumbents under-innovate.</div></div>
+                <div class="leg"><div class="k">W · weakness</div><div class="v">VRIO (missing O) &mdash; each acquired workforce&rsquo;s V+R+I situated knowledge is <em>not organised</em> for capture/reuse.</div></div>
+                <div class="leg"><div class="k">S · strengths</div><div class="v">VRIO &mdash; regulated customs expertise; 200+ network; repeatable acquisition capability; small-firm agility.</div></div>
+                <div class="leg"><div class="k">T · threats</div><div class="v">PESTEL + Five Forces &mdash; thin margins + rate/supplier squeeze; integrator price/scale pressure; skills scarcity + churn.</div></div>
+              </div>
+              -->
+              <p class="gap">&ldquo;Articulating an operational problem could deepen a learner&rsquo;s capability and produce a reusable artefact at once &mdash; <em>but in an acquired workforce, the two aren&rsquo;t yet designed as a single act.</em>&rdquo;</p>
+              <p class="note">The W&times;O proposition the study investigates &mdash; a claim about <em>form</em> (not yet designed as one act), not about the partner&rsquo;s data. Five Forces says <em>why</em>; VRIO says <em>what</em>; PESTEL says <em>why now</em>.</p>
+              <p class="defer">Full TOWS analysis &mdash; the worked W&times;O matrix (SO &middot; ST &middot; WO &middot; WT) &mdash; developed at <b>A2</b>.</p>
+            </div>
+          </div>
+
+          <!-- COLUMNS 3–6 · DESIGN REGISTER (DP1→DP4) -->
+          <div class="desgroup">
+            <div class="colhead design"><span class="reg design">The design &middot; the pipeline</span> <span class="hint">journal-warranted &mdash; reads left to right, DP1 &rarr; DP4</span></div>
+            <div id="designLanes"></div>
+          </div>
+
+        </div>
+
+        <!-- LOWER BAND · positioning + beyond -->
+        <div class="hrow lower">
+          <div class="hcol widecol">
+            <div class="colhead"><span class="reg coral">Critical engagement &middot; positioning</span> <span class="hint">imported-warrant survival</span></div>
+            <div class="nodes" id="criticalNodes"></div>
+          </div>
+          <div class="hcol widecol">
+            <div class="colhead"><span class="reg" style="background:#eee;color:var(--muted)">Beyond A1B</span> <span class="hint">landscape-informing &mdash; DP5 seed &amp; cumulative-strain framing</span></div>
+            <div class="nodes" id="postA3Nodes"></div>
+          </div>
+        </div>
+
+        <!-- FOUNDATION · the environment scan as bedrock, full width -->
+        <div class="foundation">
+          <div class="colhead"><span class="reg grey">The ground · environment scan</span> <span class="hint">industry &amp; background sources · the economy, industry and firm context the whole proposal rests on &mdash; not counted toward the literature gate</span></div>
+          <div id="instruments"></div>
+        </div>
+
+        </div>
+      </div>
+
+      <div id="convo-banner"></div>
+    </div>
+
+    <div class="foot">
+      Kali Madden · BUS922 A1B · Dr Nelly Liyanagamage · 28 June 2026 · evidence landscape · thinking tool
+    </div>
+  </div>
+
+  <!-- detail panel -->
+  <div class="panel">
+    <div class="panel-in">
+      <div class="meta" id="pMeta"><span class="rankchip amber">hover a node</span></div>
+      <div class="body" id="pBody">
+        <p class="ttl">Hover or click any node to inspect it</p>
+        <p class="role">Each node carries its verified standing (ABDC / SCImago / FT50), its evidence register, and the role it plays in the slice. Grey chips open the source and show the full UoW Harvard citation. Use the <b>Conversations</b> chips to trace the seven cross-paper exchanges.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+/* ============================================================
+   BUS922 · Evidence Landscape v1 — DATA LAYER
+   Assessment stage: A1B (this version). Next versions: A2, then A3.
+   Two registers joined at the TOWS hinge. Grey tier is
+   environment-scan (NOT gate-counted); only external-anchored
+   grey sources appear (confidentiality discipline).
+   ============================================================ */
+
+const META = { gate: 22, conservative: 21, ft50: 7 };
+
+/* ---------- GREY SOURCES (external-anchored only) ----------
+   Rendered as clickable chips inside the instrument lenses.
+   Each carries label + URL (href) + full UoW Harvard citation
+   (hover popup). `dir:true` = directional (recruiter/vendor),
+   rendered beneath the anchors. ABS has no single URL. */
+const GREY = {
+  'ibis5292b': { label:'IBISWorld I5292B', url:'https://my.ibisworld.com/au/en/industry/I5292b/performance',
+    cite:'IBISWorld 2025, <i>Rail, air &amp; sea freight forwarding in Australia</i>, IBISWorld industry report I5292B, IBISWorld, viewed 28 June 2026 (UoW Library permissions).' },
+  'ibis4810': { label:'IBISWorld I4810', url:'https://my.ibisworld.com/au/en/industry/I4810/products-and-markets',
+    cite:'IBISWorld 2026, <i>Water freight transport in Australia</i>, IBISWorld industry report I4810, IBISWorld, viewed 28 June 2026 (UoW Library permissions).' },
+  'aasb': { label:'AASB S2', url:'https://standards.aasb.gov.au/aasb-s2-sep-2024',
+    cite:'Australian Accounting Standards Board (AASB) 2024, <i>AASB S2 climate-related disclosures</i>, AASB, viewed 28 June 2026.' },
+  'imo': { label:'IMO', url:'https://www.imo.org/en/mediacentre/pressbriefings/pages/imo-approves-netzero-regulations.aspx',
+    cite:'International Maritime Organization (IMO) 2025, <i>IMO approves net-zero regulations</i>, IMO, viewed 28 June 2026.' },
+  'rba': { label:'RBA', url:'https://www.rba.gov.au/statistics/frequency/exchange-rates.html',
+    cite:'Reserve Bank of Australia (RBA) 2026, <i>Exchange rates</i>, RBA, viewed 28 June 2026.' },
+  'abf': { label:'ABF', url:'https://www.abf.gov.au/licensing/brokers/about',
+    cite:'Australian Border Force (ABF) 2026, <i>Licensed customs brokers</i>, Australian Border Force, viewed 28 June 2026.' },
+  'abs': { label:'ABS', url:'https://www.abs.gov.au',
+    cite:'Australian Bureau of Statistics releases (CPI, national accounts, wage price index, international trade, labour force). Link is the ABS home page as a search entry point.' },
+  'alphaliner': { label:'Alphaliner / Container News', url:'https://container-news.com/shipping-alliances-msc-global-market-share-2025/',
+    cite:'Container News 2025, <i>Shipping alliances and MSC control over 80% of the market</i>, Container News, viewed 28 June 2026.' },
+  'seatrade': { label:'Seatrade / MDS Transmodal', url:'https://www.seatrade-maritime.com/containers/container-alliances-still-dominant-but-independents-gain-ground',
+    cite:'Seatrade Maritime 2026, <i>Container alliances still dominant but independents gain ground</i>, Seatrade Maritime News, viewed 28 June 2026.' },
+  'sourcing': { label:'Sourcing Journal', url:'https://wwd.com/sourcing-journal/logistics/flexport-projects-2025-profit-convoy-organic-growth-freight-forwarder-ryan-petersen-1238856765/',
+    cite:'Sourcing Journal 2026, <i>Flexport projects 2025 profit, eyes more market share by 2026</i>, Sourcing Journal, viewed 28 June 2026.' },
+  'jsa': { label:'Jobs &amp; Skills AU', url:'https://www.jobsandskills.gov.au/data/occupation-shortage/occupation-shortage-list',
+    cite:'Jobs and Skills Australia 2025, <i>Occupation shortage list</i>, Jobs and Skills Australia, Australian Government, viewed 28 June 2026.' },
+  'isa': { label:'Industry Skills AU', url:'https://www.industryskillsaustralia.org.au/addressing-workforce-challenges-freight-forwarding-customs-broking',
+    cite:'Industry Skills Australia 2025, <i>Addressing workforce challenges in freight forwarding &amp; customs broking</i>, Industry Skills Australia, viewed 28 June 2026.' },
+  'logihire': { label:'LogiHire', url:'https://logihire.com.au/freight-forwarding-salary-guide', dir:true,
+    cite:'LogiHire 2026, <i>Freight forwarding salary guide Australia 2026</i>, LogiHire, viewed 28 June 2026. (Directional — recruiter guide.)' },
+  'mordor': { label:'Mordor Intelligence', url:'https://www.mordorintelligence.com/industry-reports/digital-freight-forwarding-market', dir:true,
+    cite:'Mordor Intelligence 2026, <i>Digital freight forwarding market</i>, Mordor Intelligence, viewed 28 June 2026. (Directional — vendor market research.)' }
+};
+
+/* ---------- PROBLEM REGISTER · grey-lit environment scan (lenses) ---------- */
+const INSTRUMENTS = [
+  { id:'pestel', name:'PESTEL', sub:'macro context', owns:'owns the O · T legs', fig:'appendix-1-pestel.html',
+    finding:'An opening in technology (automation and AI maturing while the industry has been slow to modernise) meets a people problem (skilled staff scarce, and know-how at risk when firms are acquired) inside tight margins (3.9%). So developing capability is <em>timely</em> &mdash; driven by the environment, not just internal preference.',
+    sources:['ibis5292b','ibis4810','aasb','imo','rba','abf','abs'] },
+  { id:'fiveforces', name:'Five Forces', sub:'industry structure', owns:'underwrites &ldquo;why differentiate&rdquo;', fig:'appendix-2-five-forces.html',
+    finding:'A mature, fragmented, low-margin industry with one strong force working against small firms (<b>the big shipping lines</b>). A smaller forwarder can&rsquo;t win on price against larger, integrated rivals &mdash; so it competes on the <b>strength of its people</b>.',
+    sources:['ibis5292b','ibis4810','alphaliner','seatrade','sourcing'] },
+  { id:'vrio', name:'VRIO', sub:'firm resources · the missing &ldquo;O&rdquo;', owns:'owns the W · S legs', fig:'appendix-3-vrio.html',
+    finding:'The know-how and relationships experienced staff hold are <b>valuable, rare and hard to copy</b>; the open question is how well a firm like the partner is <b>set up to develop and share</b> it (the &ldquo;O&rdquo; in VRIO). That is what the research explores. <span class="conf">Acquisition-capability and small-firm-culture details are partner-confidential &mdash; not shown.</span>',
+    sources:['ibis5292b','jsa','isa','logihire'] }
+];
+
+/* ---------- PROBLEM REGISTER · academic M&A serial-learning cluster ---------- */
+const PROBLEM = [
+  { id:'zollosingh', ref:'Zollo &amp; Singh', yr:2004, register:'problem', gate:true, ft50:true, dots:4,
+    standing:'ABDC A* · Q1 · FT50 #50', venue:'Strategic Management Journal',
+    role:'The <b>codification node</b> and the direct warrant for the headline. Across 228 bank-merger acquisitions, deliberate knowledge codification predicts performance (&beta;=0.21) while experience accumulation does not; the benefit grows with integration complexity. <b>Warrants DP3</b> from the strategy side; latent DP2 (&ldquo;the learning is in the creating, not the tool&rdquo;).',
+    touch:['dp3','dp2'] },
+  { id:'haleblian', ref:'Haleblian &amp; Finkelstein', yr:1999, register:'problem', gate:true, ft50:true, dots:4,
+    standing:'ABDC A* · Q1 · FT50 #6', venue:'Administrative Science Quarterly',
+    role:'The deepest problem layer. Across 449 acquisitions, experience is <b>U-shaped</b> and similarity-contingent &mdash; inexperienced acquirers over-generalise. The discrimination capability experience slowly buys must, for the industry partner, be built into the Learn act.',
+    touch:['dp3','dp4'] },
+  { id:'trichterborn', ref:'Trichterborn et al.', yr:2016, register:'problem', gate:true, ft50:true, dots:4,
+    standing:'ABDC A* · Q1 · FT50 #50', venue:'Strategic Management Journal',
+    role:'The <b>capability node</b> and strongest SME-translation warrant. A dedicated M&amp;A function improves performance <b>only through</b> the capability it builds (full mediation, Sobel z=3.10) &mdash; a four-part process (articulate&rarr;codify&rarr;share&rarr;internalise). The unit is a means; the capability is the end, so an SME can build it by design. Front-end <b>is</b> DP2+DP3.',
+    touch:['dp3'] },
+  { id:'schweizer', ref:'Schweizer et al.', yr:2022, register:'problem', gate:true, ft50:false, dots:3,
+    standing:'ABDC A* · Q1', venue:'Long Range Planning',
+    role:'The recent meta-analytic consolidation (MASEM; 167 studies). Confirms the field-level finding that <b>deliberate-learning &gt; experience accumulation</b> &mdash; the gap is still live, not one dated study. Cite the <em>relative</em> contrast only (absolute effect small, k=9).',
+    touch:['dp3'] },
+  { id:'laamanen', ref:'Laamanen &amp; Keil', yr:2008, register:'problem', gate:true, ft50:true, dots:4,
+    standing:'ABDC A* · Q1 · FT50 #50', venue:'Strategic Management Journal',
+    role:'The direct serial-strain leg (independent). High acquisition <b>rate</b> and rate <b>variability</b> hurt performance; experience/size/scope absorb it; frequent acquirers outperform long-run. The strain is scale-independent (transfers to the industry partner); the absorbers are not &mdash; so engineer the absorbing capability.',
+    touch:['dp3'] }
+];
+
+/* relational-fabric pair + context — out of the bounded slice (post-A1B / DP5) */
+const POSTA3 = [
+  { id:'colman', ref:'Colman &amp; Rouzies', yr:2019, register:'postA3', gate:true, ft50:true, dots:4, dim:true,
+    standing:'ABDC A* · Q1 · FT50 #25', venue:'Journal of Management',
+    role:'<b>DP5 seed (out of slice).</b> Integration is a relational accomplishment: pre-existing embedded relationships channel the boundary-spanning that facilitates integration; severing them destroys acquired capability. Grounds <em>why</em> surfacing situated knowledge matters; offers no design guidance for the bounded act.',
+    touch:[] },
+  { id:'rouzies', ref:'Rouzies, Colman &amp; Angwin', yr:2019, register:'postA3', gate:true, ft50:false, dots:3, dim:true,
+    standing:'ABDC A* · Q1', venue:'Long Range Planning',
+    role:'<b>DP5 seed (out of slice).</b> The embeddedness / co-evolving-strain leg &mdash; coordination + cohesion facilitate, disconnection + alienation impede. <span class="conf">Same dataset as Colman &amp; Rouzies (non-independent) &mdash; two lenses on one case, not corroborating studies.</span>',
+    touch:[] },
+  { id:'maynard', ref:'Maynard', yr:2020, register:'postA3', gate:false, ft50:false, dots:0, dim:true, frame:true,
+    standing:'Book — not gate-eligible', venue:'Future Rising (Pippard&rsquo;s ladder)',
+    role:'<b>Context framing (concept-level).</b> Cumulative-strain motivation: complex systems look stable while accumulating stress, then tip non-linearly. The preventive &ldquo;why act now.&rdquo; Practitioner thought leadership &mdash; does not count toward the peer-reviewed gate.',
+    touch:[] }
+];
+
+/* ---------- DESIGN REGISTER · DP1–DP4 pipeline ---------- */
+const DPS = [
+  { id:'dp1', num:'DP1', tag:'raw material', headline:false,
+    title:'Authentic operational problem',
+    gist:'Anchor the act in a real problem the learner brings or chooses. Authenticity &mdash; cognitive realism, not difficulty &mdash; drives transferable learning. Andragogy enters here as a design heuristic.',
+    nodes:[
+      { id:'perusso', ref:'Perusso &amp; Baaken', yr:2020, gate:true, dots:2, standing:'ABDC B · Q1', venue:'Int. Journal of Management Education',
+        role:'The DP1 <b>gate qualifier</b> (the only one in DP1) and the business-discipline lens. Carries authenticity into management learning via <b>real-worldness</b> &mdash; real problems carry uncertainty/pressure/risk that simulations and cases do not.' },
+      { id:'herrington', ref:'Herrington, Reeves &amp; Oliver', yr:2013, gate:false, dots:0, frame:true, standing:'Book chapter — gate-neutral', venue:'Handbook of Research on Ed. Comms &amp; Tech',
+        role:'<b>Why authenticity works:</b> cognitive realism, not fidelity, drives transferable knowledge. Locates the research gap at the DP1&rarr;DP3 hinge (authentic-task characteristics are settled; codification-relocation is not).' },
+      { id:'knowles', ref:'Knowles', yr:1975, gate:false, dots:0, frame:true, standing:'Book — gate-neutral', venue:'Self-Directed Learning',
+        role:'Andragogy as the design <b>stance</b> licensing the learner&rsquo;s own authentic problem as raw material. Cited as a heuristic, not a predictive theory (scoped by Taylor &amp; Kroth 2009).' },
+      { id:'lakkala', ref:'Lakkala et al.', yr:2023, gate:false, dots:0, suppl:true, standing:'Not ranked — illustration', venue:'Int. J. Scholarship of Teaching &amp; Learning',
+        role:'<b>By-product spine (origin).</b> Real-client course &rarr; highest self-assessed learning; learners most valued tasks that <em>produced something for further use</em>. Illustration, not anchor &mdash; leans on the DP4 anchors.' }
+    ] },
+  { id:'dp2', num:'DP2', tag:'generation', headline:false,
+    title:'Generative articulation',
+    gist:'The learner produces a short, prompted explicit account of the problem. Self-explanation drives the learning (g=.55) &mdash; and the generation is simultaneously the learning <em>and</em> the externalised artefact.',
+    nodes:[
+      { id:'bisra', ref:'Bisra et al.', yr:2018, gate:true, dots:3, standing:'Q1 · gate paper', venue:'Educational Psychology Review',
+        role:'The <b>effect spine</b> (g=.55) &mdash; prompted self-explanation produces robust learning and <b>beats being told</b>. Names computer-generated prompts + a fade as knowledge grows (directly relevant to a GenAI template).' },
+      { id:'fiorella', ref:'Fiorella &amp; Mayer', yr:2016, gate:true, dots:3, standing:'Q1 · gate paper', venue:'Educational Psychology Review',
+        role:'The generative-mode <b>taxonomy.</b> Artefact-producing modes (summarise/explain/teach; d&asymp;.50&ndash;.77) generate an external representation as they generate learning &mdash; the dual-output logic.' },
+      { id:'tannenbaum', ref:'Tannenbaum &amp; Cerasoli', yr:2013, gate:true, dots:3, standing:'Q1 · gate-positive', venue:'Human Factors',
+        role:'The <b>workplace anchor</b> (quantified). Structured reflection (debrief/AAR) lifts individual performance (d&asymp;.71) and teams ~20&ndash;25% in real settings; structure (d=.69) + facilitation (.75 vs .25) carry the act &mdash; double-duty into DP3.' },
+      { id:'goffin', ref:'Goffin &amp; Koners', yr:2011, gate:true, ft50:false, dots:4, standing:'ABDC A* · Q1', venue:'J. Product Innovation Management',
+        role:'The <b>written-artefact anchor</b> and the slice&rsquo;s cleanest problem statement: PPRs capture ~<b>3 lessons recorded vs ~226 surfaced</b> &mdash; the tacit-linked ones lost unless structure + context are engineered in. The causal hinge in one paper (DP2&rarr;DP3&rarr;DP4).' },
+      { id:'boldrini', ref:'Boldrini &amp; Cattaneo', yr:2014, gate:false, dots:2, fenced:true, standing:'Q2 — fenced illustration', venue:'Vocations and Learning',
+        role:'The closest task-shape analogue to the industry partner&rsquo;s act (an individual writing a structured reflective account of a real procedure). Prompt-level scaffolding lifts reflective-writing quality. <span class="conf">Q2 education journal &mdash; not gate-counted; consistent-with edge, never standalone.</span>' },
+      { id:'schon', ref:'Sch&ouml;n', yr:1987, gate:false, dots:0, frame:true, standing:'Book — gate-neutral', venue:'Educating the Reflective Practitioner',
+        role:'The DP2 <b>frame.</b> Reflection-in/-on-action surfaces tacit knowing-in-action; the articulation and the artefact are inseparable &mdash; but the structuring usually comes from a skilled coach (the template&rsquo;s role).' },
+      { id:'bangert', ref:'Bangert-Drowns et al.', yr:2004, gate:true, dots:3, standing:'Q1 · gate paper', venue:'Review of Educational Research',
+        role:'The DP2 <b>design constraint.</b> Metacognitive prompts raise gains; long assignments lower them; expressive writing is null &mdash; the active ingredient is the <b>metacognitive scaffold</b>, not expressiveness. Put the prompt in the template.' },
+      { id:'boud', ref:'Boud, Keogh &amp; Walker', yr:1985, gate:false, dots:0, frame:true, standing:'Book — gate-neutral', venue:'Reflection: Turning Experience into Learning',
+        role:'The DP2 <b>co-frame</b> and the by-product spine&rsquo;s reuse warrant (Ch.3): writing captures the event so it can be returned to later &mdash; simultaneously the learning <em>and</em> a reusable record.' }
+    ] },
+  { id:'dp3', num:'DP3', tag:'the template', headline:true,
+    title:'Structuring lives in the template',
+    gist:'A designer-built GenAI template carries the reusable structure &mdash; it elicits reflection, auto-applies titles/tags/metadata. The learner <em>only generates</em>. The template fades gently and adaptively as expertise grows. THE HEADLINE.',
+    nodes:[
+      { id:'vmb', ref:'van Merri&euml;nboer &amp; Boot', yr:2005, gate:false, dots:0, frame:true, standing:'Book chapter — gate-neutral', venue:'(cite 2005/06, not 2008)',
+        role:'The <b>conceptual spine</b> (shared DP3/DP4 anchor): relocate reusable structure off the content item into <b>templates</b> and <b>richly-documented intermediates</b> &mdash; templates-not-instantiations, intermediate-not-final. The mechanism for relocating structuring off the learner. <span class="conf">Proposed, not tested &mdash; design inference.</span>' },
+      { id:'vms', ref:'van Merri&euml;nboer &amp; Sweller', yr:2010, gate:true, dots:3, standing:'Q1 · gate-qualifying', venue:'Medical Education',
+        role:'The <b>cognitive-load engine.</b> A template can carry the worked structure (cutting extraneous load) while the learner does the germane, schema-building generative act &mdash; and support must <b>fade</b> as expertise grows (expertise reversal). Explains why a blank box fails.' },
+      { id:'tetzlaff', ref:'Tetzlaff et al.', yr:2025, gate:true, dots:3, standing:'Q1 · gate paper', venue:'Learning and Instruction',
+        role:'The <b>fade evidence</b> (meta-analytic keystone). Assistance helps novices (d=.505), harms experts (d=&minus;.428) &mdash; asymmetric. Strongest in law/business. Two gifts: the asymmetry gives the SME default (err toward support) and names the domains where it bites.' },
+      { id:'salden', ref:'Salden et al.', yr:2010, gate:true, dots:3, standing:'Q1 · gate-qualifying', venue:'Instructional Science',
+        role:'The implementable <b>fade mechanism.</b> Adaptive fading (keyed to the learner&rsquo;s self-explanation quality) beats fixed fading and problem-solving on delayed retention. The closest analogue to the slice&rsquo;s mechanism: the same account that captures knowledge tells the template how much help to give.' },
+      { id:'nievelstein', ref:'Nievelstein et al.', yr:2013, gate:true, dots:3, standing:'Q1 · gate paper', venue:'Contemporary Educational Psychology',
+        role:'The <b>domain caveat</b> (ill-structured softener). In legal case reasoning, worked examples stayed effective for novices <em>and</em> advanced &mdash; no expertise reversal. The industry partner&rsquo;s problems are ill-structured, so the template stays useful longer; ease support off slowly.' }
+    ] },
+  { id:'dp4', num:'DP4', tag:'the output', headline:false,
+    title:'Context-rich intermediate',
+    gist:'Capture a rich, situated intermediate and stop. Reuse-preparation happens later &mdash; that&rsquo;s Share&rsquo;s job. Do not decontextualise at the point of creation; the context is the strategic asset. The Learn&rarr;Share seam.',
+    nodes:[
+      { id:'markus', ref:'Markus', yr:2001, gate:true, ft50:true, dots:4, standing:'ABDC A* · Q1 · FT50 #26', venue:'J. Management Information Systems',
+        role:'The DP4 <b>anchor</b> and the Learn&rarr;Share seam. The <b>producer&ndash;reuser asymmetry</b>: producers rarely repurpose their own output; repositories need rework &mdash; so capture context-rich and defer reuse-prep downstream. The by-product design answers his asymmetry.' },
+      { id:'szulanski', ref:'Szulanski', yr:2000, gate:true, ft50:true, dots:4, standing:'ABDC A* · Q1 · FT50 #40', venue:'OBHDP',
+        role:'The <b>transfer-risk leg</b> (empirical). Stickiness is driven by <b>causal ambiguity</b> and the recipient&rsquo;s <b>absorptive capacity</b> (122 transfers). A context-rich intermediate attacks stickiness at source &mdash; it preserves the why/how. Bounds the claim: reuse-<em>ready</em>, not self-transferring.' },
+      { id:'riviere', ref:'Rivi&egrave;re et al.', yr:2019, gate:true, dots:3, standing:'Q1 · gate-qualifying', venue:'Academic Medicine',
+        role:'The <b>learning-theory leg</b> (CDR). Abstraction must be bracketed: contextualise &rarr; decontextualise &rarr; recontextualise &mdash; so it cannot be done cleanly at capture. Confirms the Learn&rarr;Share boundary: capture context-rich now, defer guided abstraction downstream.' },
+      { id:'lobato', ref:'Lobato', yr:2006, gate:true, suppl:true, dots:3, standing:'Q1 · supplementary', venue:'J. of the Learning Sciences', critical:true,
+        role:'The <b>situated critique</b> (also a critical-engagement member). Names the &ldquo;fallacy of decontextualisation&rdquo;: stripping context removes meaning. The deepest warrant for &ldquo;don&rsquo;t strip&rdquo; &mdash; and it obliges the slice to adopt the <b>situated view</b> of the contested transfer construct.' },
+      { id:'kasper', ref:'Kasper et al.', yr:2010, gate:true, suppl:true, dots:3, standing:'ABDC A · Q1 · supplementary', venue:'J. of Management Inquiry',
+        role:'The <b>&ldquo;thinning&rdquo; risk</b> (empirical). Firms strip contextual richness to move knowledge &mdash; rationally and deliberately, even in developed KM systems. So &ldquo;don&rsquo;t decontextualise&rdquo; must be argued against a real organisational pull: the template makes the rich version the low-friction default.' }
+    ] }
+];
+
+/* ---------- CRITICAL ENGAGEMENT · positioning tier (not gate-counted) ---------- */
+const CRITICAL = [
+  { id:'gourlay', ref:'Gourlay', yr:2006, register:'critical', gate:false, ft50:true, dots:4, positioning:true,
+    standing:'ABDC A* · Q1 · FT50 #27 · positioning', venue:'J. of Management Studies',
+    role:'<b>Positions DP2 (externalisation).</b> The established SECI critique: the conversion modes are thinly evidenced and conceptually uneven. The slice imports externalisation as a <b>name</b> only and relocates the effect evidence onto the generative-learning literatures. Disciplines the justification, not the design.',
+    positions:'dp2' },
+  { id:'farnese', ref:'Farnese et al.', yr:2019, register:'critical', gate:false, ft50:false, dots:2, positioning:true,
+    standing:'Q2 · positioning (evidential)', venue:'Frontiers in Psychology',
+    role:'<b>Positions DP2 (the partial rebuttal).</b> Validates externalisation&rsquo;s <b>measurability + consequence</b> (KMSP-Q; two large samples) &mdash; but <em>not</em> the conversion mechanism, and it concurs with Gourlay on transfer-vs-conversion. Confirms the slice&rsquo;s import-narrowly choice rather than rescuing the full model.',
+    positions:'dp2' },
+  { id:'taylorkroth', ref:'Taylor &amp; Kroth', yr:2009, register:'critical', gate:false, ft50:false, dots:0, positioning:true, frame:true,
+    standing:'Not ranked · positioning', venue:'J. of Adult Education',
+    role:'<b>Positions DP1 (andragogy).</b> The standard compilation of the andragogy critique &mdash; &ldquo;lacks the fundamental characteristics of a science.&rdquo; This is <em>why</em> the slice cites andragogy as a heuristic, not a predictive theory. Scopes Knowles 1975 (content&harr;critique pair).',
+    positions:'dp1' }
+];
+
+/* ---------- CONVERSATIONS (the seven) + the causal chain ----------
+   kind on each arc = edge weight: mechanistic | defensible | interpretive | consistent-with */
+const CONVERSATIONS = {
+  cA: { name:'Both ends settled; the middle is the contribution', lineage:'',
+    desc:'DP1 + DP2 are settled across traditions; the originality is DP3 (relocation) + DP4 (context-rich by-product). Confirmed across all tiers.',
+    nodes:['dp1','dp2','dp3','dp4'],
+    arcs:[['dp1','dp2','interpretive'],['dp2','dp3','interpretive'],['dp3','dp4','mechanistic']] },
+  cB: { name:'&ldquo;Structuring must be supplied by design&rdquo; (DP2&harr;DP3)', lineage:'',
+    desc:'Eight learning-science sources demand that the structuring be supplied; five DP3 papers supply and specify it. The headline convergence on the design side.',
+    nodes:['goffin','bangert','schon','boud','vmb','vms'],
+    arcs:[['goffin','vmb','mechanistic'],['bangert','vmb','defensible'],['schon','vmb','consistent-with'],['boud','vmb','consistent-with'],['vmb','vms','mechanistic']] },
+  cC: { name:'The by-product / dual-output spine (DP1&rarr;DP2&rarr;DP4)', lineage:'',
+    desc:'Seeded at DP1 (Lakkala), framed at DP2 (Sch&ouml;n; Boud/Walker Ch.3), it lands at DP4 (Markus). The learning (DP2) and the reusability (DP4) are two distinct mechanisms &mdash; cite each for its own half.',
+    nodes:['lakkala','schon','boud','markus'],
+    arcs:[['lakkala','schon','consistent-with'],['schon','boud','consistent-with'],['boud','markus','defensible']] },
+  cD: { name:'&ldquo;Don&rsquo;t decontextualise at capture&rdquo; (DP4)', lineage:'',
+    desc:'Six lenses converge: reuse-economics (Markus), transfer-risk (Szulanski, empirical), org practice (Kasper, empirical), learning-theory (Rivi&egrave;re), situated critique (Lobato), and the design move (vM&amp;B).',
+    nodes:['markus','szulanski','kasper','riviere','lobato','vmb'],
+    arcs:[['markus','szulanski','mechanistic'],['szulanski','kasper','defensible'],['kasper','lobato','consistent-with'],['lobato','riviere','interpretive'],['riviere','vmb','consistent-with']] },
+  cE: { name:'Imported-warrant survival (the borrowed-foundations discipline)', lineage:'',
+    desc:'Three contested foundations &mdash; andragogy (DP1), externalisation/SECI (DP2), transfer (DP4) &mdash; answered the same way: import the construct narrowly/critically and relocate the evidential weight onto the better-evidenced mechanism literatures. The HD critical-evaluation engine.',
+    nodes:['taylorkroth','knowles','gourlay','farnese','bisra','lobato','markus'],
+    arcs:[['taylorkroth','knowles','interpretive'],['gourlay','farnese','defensible'],['farnese','bisra','consistent-with'],['lobato','markus','interpretive']] },
+  cF: { name:'&ldquo;Relocate the codifying work&rdquo; — cross-disciplinary convergence', lineage:'', headline:true,
+    desc:'The DP3 move is warranted from TWO independent disciplines: the learning sciences (CLT + fade + cognitive load) and strategic management (codification-not-experience drives M&amp;A performance; the dedicated function is dispensable, the capability is the end). The strongest convergence in the landscape.',
+    nodes:['zollosingh','trichterborn','vmb','vms','tetzlaff','salden'],
+    arcs:[['zollosingh','vms','defensible'],['trichterborn','vmb','defensible'],['zollosingh','trichterborn','mechanistic'],['vms','tetzlaff','mechanistic'],['tetzlaff','salden','defensible']] },
+  cG: { name:'Environment, structure &amp; firm all point to capability', lineage:'',
+    desc:'The three industry analyses agree with each other and with the academic problem research: PESTEL (the economy), Five Forces (the industry) and VRIO (the firm) all point to developing people&rsquo;s capability as the sensible business response. VRIO&rsquo;s open question &mdash; is the know-how being developed and shared? &mdash; lines up with the M&amp;A finding that deliberate learning, not just experience, drives performance.',
+    nodes:['pestel','fiveforces','vrio','zollosingh'],
+    arcs:[['pestel','fiveforces','interpretive'],['fiveforces','vrio','interpretive'],['vrio','zollosingh','defensible']] },
+  chain: { name:'&rarr; The causal chain (one chain, both ends, both disciplines)', lineage:'', chain:true,
+    desc:'serial-acquisition strain (the M&amp;A problem) &rarr; DP1 authentic problem &rarr; DP2 generative articulation &rarr; DP3 the template (the hinge) &rarr; DP4 context-rich intermediate &rarr; the Learn&rarr;Share seam. The strongest mechanistic warrant for the whole pipeline.',
+    nodes:['zollosingh','dp1','dp2','dp3','dp4'],
+    arcs:[['zollosingh','dp1','mechanistic'],['dp1','dp2','mechanistic'],['dp2','dp3','mechanistic'],['dp3','dp4','mechanistic']] }
+};
+
+</script>
+  <script>
+/* ============================================================
+   BUS922 · Evidence Landscape v1 — ENGINE
+   Renders the two-register network, draws SVG conversation arcs,
+   wires focus filters / register toggle / gate highlight /
+   conversation overlays / detail panel.
+   ============================================================ */
+
+/* ---------- node index (id -> object) ---------- */
+const NODE_INDEX = {};
+[...PROBLEM, ...POSTA3, ...CRITICAL].forEach(n => NODE_INDEX[n.id] = n);
+DPS.forEach(dp => { NODE_INDEX[dp.id] = dp; dp.nodes.forEach(n => { n.dp = dp.id; NODE_INDEX[n.id] = n; }); });
+INSTRUMENTS.forEach(i => NODE_INDEX[i.id] = i);
+
+const $ = sel => document.querySelector(sel);
+const allNodeEls = [];
+
+/* ---------- detail panel ---------- */
+const pMeta = $('#pMeta'), pBody = $('#pBody');
+function dotStr(d){ return '●●●●'.slice(0, d) + '○○○○'.slice(0, 4 - d); }
+
+function show(n){
+  let cls = n.gate ? 'green' : (n.frame || n.dim || n.positioning || n.suppl || n.fenced) ? 'amber' : 'green';
+  const dots = n.dots ? `<span class="dots">${dotStr(n.dots)}</span>` : '';
+  pMeta.innerHTML = `<span class="rankchip ${cls}">${dots}${n.standing || ''}</span>`
+    + `<div class="reglab">${regLabel(n.register || (n.dp ? 'design' : ''))}${n.venue ? ' · ' + n.venue : ''}</div>`;
+  pBody.innerHTML = `<p class="ttl">${n.ref} <span class="yr">${n.yr || ''}</span></p><p class="role">${n.role || ''}</p>`;
+}
+function showInstrument(i){
+  pMeta.innerHTML = `<span class="rankchip grey">environment-scan</span><div class="reglab">Problem register · grey-lit · ${i.owns}</div>`;
+  pBody.innerHTML = `<p class="ttl">${i.name} <span class="yr">${i.sub}</span></p><p class="role">${i.finding}</p>`;
+}
+function showGrey(g){
+  pMeta.innerHTML = `<span class="rankchip grey">${g.dir ? 'directional ⚠' : 'external-anchored'}</span><div class="reglab">${g.url ? 'click chip to open source ↗' : 'no single URL'}</div>`;
+  pBody.innerHTML = `<p class="ttl">${g.label}</p><p class="role cite">${g.cite}</p>`;
+}
+function regLabel(r){
+  return { problem:'Problem register · academic M&A', design:'Design register · the slice',
+    critical:'Critical engagement · positioning', postA3:'Out of scope · post-A1B · landscape-informing',
+    grey:'Problem register · grey-lit' }[r] || '';
+}
+
+/* ---------- node builder ---------- */
+let activeEl = null;
+function setActive(el){ if (activeEl) activeEl.classList.remove('active'); activeEl = el; el.classList.add('active'); }
+
+function mkNode(n){
+  const b = document.createElement('button');
+  let kind = n.gate ? 'green' : 'amber';
+  b.className = 'node ' + kind
+    + (n.frame ? ' frame' : '') + (n.suppl ? ' suppl' : '') + (n.fenced ? ' fenced' : '')
+    + (n.dim ? ' dim-perm' : '') + (n.positioning ? ' positioning' : '');
+  b.dataset.id = n.id;
+  b.dataset.register = n.register || (n.dp ? 'design' : '');
+  b.dataset.gate = n.gate ? '1' : '0';
+  let dpset = new Set();
+  if (n.dp) dpset.add(n.dp);
+  (n.touch || []).forEach(t => dpset.add(t));
+  if (n.positions) dpset.add(n.positions);
+  b.dataset.dp = [...dpset].join(',');
+  const dots = n.dots ? `<span class="rankdots" title="${n.standing || ''}">${dotStr(n.dots)}</span>` : '<span class="rankdots none">○○○○</span>';
+  b.innerHTML = `<span class="rk"></span><span class="ref">${n.ref} <span class="yr">${n.yr || ''}</span></span>${dots}`;
+  if (n.ft50) b.innerHTML += '<span class="ft50">FT50</span>';
+  const handler = () => { setActive(b); show(n); };
+  b.addEventListener('mouseenter', handler);
+  b.addEventListener('click', handler);
+  b.addEventListener('focus', handler);
+  allNodeEls.push(b);
+  return b;
+}
+
+/* ---------- render: problem register (grey lenses) ---------- */
+function renderInstruments(){
+  const host = $('#instruments');
+  INSTRUMENTS.forEach(i => {
+    const card = document.createElement('div');
+    card.className = 'lens';
+    card.dataset.id = i.id;
+    card.dataset.register = 'grey';
+    card.dataset.gate = '0';
+    card.dataset.dp = '';
+    let chips = '';
+    i.sources.forEach(sid => {
+      const g = GREY[sid];
+      if (!g) return;
+      const tag = g.url
+        ? `<a class="gchip${g.dir ? ' dir' : ''}" href="${g.url}" target="_blank" rel="noopener" data-src="${sid}">${g.label}${g.dir ? ' ⚠' : ''} <span class="ext">↗</span></a>`
+        : `<button class="gchip nolink" data-src="${sid}">${g.label}</button>`;
+      chips += tag;
+    });
+    card.innerHTML = `<div class="lens-head"><h4>${i.name}</h4><span class="owns">${i.owns}</span></div>`
+      + `<div class="lens-sub">${i.sub}</div>`
+      + `<div class="lens-find">${i.finding}</div>`
+      + `<div class="gsrc"><span class="gsrc-lab">anchors</span>${chips}</div>`
+      + (i.fig ? `<a class="figlink" href="${i.fig}">View full figure <span class="ext">↗</span></a>` : '');
+    card.addEventListener('mouseenter', () => { setActive(card); showInstrument(i); });
+    card.addEventListener('click', e => { if (!e.target.closest('.gchip') && !e.target.closest('.figlink')) { setActive(card); showInstrument(i); } });
+    allNodeEls.push(card);
+    host.appendChild(card);
+  });
+  // grey chip detail wiring
+  host.querySelectorAll('.gchip').forEach(ch => {
+    ch.addEventListener('mouseenter', () => showGrey(GREY[ch.dataset.src]));
+    if (ch.classList.contains('nolink')) ch.addEventListener('click', () => showGrey(GREY[ch.dataset.src]));
+  });
+}
+
+function renderList(hostSel, arr){
+  const host = $(hostSel);
+  arr.forEach(n => host.appendChild(mkNode(n)));
+}
+
+/* ---------- render: design register (DP lanes) ---------- */
+function renderDesign(){
+  const host = $('#designLanes');
+  DPS.forEach(dp => {
+    const lane = document.createElement('div');
+    lane.className = 'lane' + (dp.headline ? ' headline' : '');
+    lane.dataset.lane = dp.id;
+    const head = document.createElement('div');
+    head.className = 'lane-head';
+    head.dataset.id = dp.id;
+    head.dataset.register = 'design';
+    head.dataset.gate = '0';
+    head.dataset.dp = dp.id;
+    head.innerHTML = `<div class="lane-id">${dp.num} · ${dp.tag}${dp.headline ? '<span class="hbadge">HEADLINE</span>' : ''}</div>`
+      + `<h3>${dp.title}</h3><p class="lane-gist">${dp.gist}</p>`;
+    head.addEventListener('mouseenter', () => { setActive(head); show(dp); });
+    head.addEventListener('click', () => { setActive(head); show(dp); });
+    allNodeEls.push(head);
+    lane.appendChild(head);
+    const nd = document.createElement('div');
+    nd.className = 'lane-nodes';
+    dp.nodes.forEach(n => nd.appendChild(mkNode(n)));
+    lane.appendChild(nd);
+    host.appendChild(lane);
+  });
+}
+
+/* ============================================================
+   SVG arc rendering
+   ============================================================ */
+const svg = $('#links'), wrap = document.querySelector('.hscroll');
+function rectIn(parent, el){ const p = parent.getBoundingClientRect(), r = el.getBoundingClientRect();
+  return { x:r.left - p.left + parent.scrollLeft, y:r.top - p.top + parent.scrollTop, w:r.width, h:r.height }; }
+function arcPath(a, b){
+  const A = rectIn(wrap, a), B = rectIn(wrap, b);
+  const x1 = A.x + A.w/2, y1 = A.y + A.h/2, x2 = B.x + B.w/2, y2 = B.y + B.h/2;
+  const mx = (x1 + x2)/2, my = (y1 + y2)/2;
+  const dx = x2 - x1, dy = y2 - y1, dist = Math.hypot(dx, dy);
+  const off = Math.min(120, dist * 0.22);
+  // perpendicular bow
+  const nx = -dy / (dist || 1), ny = dx / (dist || 1);
+  return `M ${x1.toFixed(1)} ${y1.toFixed(1)} Q ${(mx + nx*off).toFixed(1)} ${(my + ny*off).toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+}
+let activeConvo = null, hoverId = null;
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+/* edge index built once from every conversation */
+let ALL_EDGES = [], EDGE_BY_NODE = {}, RESTING = [];
+function buildEdges(){
+  Object.entries(CONVERSATIONS).forEach(([key, c]) => {
+    c.arcs.forEach(([a, b, kind]) => {
+      const e = { a, b, kind, convo:key, chain:!!c.chain, hl:!!c.headline };
+      ALL_EDGES.push(e);
+      (EDGE_BY_NODE[a] = EDGE_BY_NODE[a] || []).push(e);
+      (EDGE_BY_NODE[b] = EDGE_BY_NODE[b] || []).push(e);
+    });
+  });
+  // the resting web: the causal chain + the cross-disciplinary convergence, always faintly present
+  RESTING = ALL_EDGES.filter(e => e.convo === 'chain' || e.convo === 'cF');
+}
+
+function drawEdge(e, cls){
+  const A = document.querySelector(`[data-id="${e.a}"]`), B = document.querySelector(`[data-id="${e.b}"]`);
+  if (!A || !B || A.classList.contains('dim') || B.classList.contains('dim')) return;
+  const p = document.createElementNS(SVGNS, 'path');
+  p.setAttribute('d', arcPath(A, B));
+  p.setAttribute('class', 'edge ' + e.kind + (e.chain ? ' chain' : '') + (e.hl ? ' hl' : '') + (cls ? ' ' + cls : ''));
+  svg.appendChild(p);
+}
+
+function drawArcs(){
+  svg.innerHTML = '';
+  const w = wrap.scrollWidth, h = wrap.scrollHeight;
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  svg.setAttribute('width', w); svg.setAttribute('height', h);
+  svg.style.width = w + 'px'; svg.style.height = h + 'px';
+  if (activeConvo){
+    const c = CONVERSATIONS[activeConvo];
+    c.arcs.forEach(([a, b, kind]) => drawEdge({ a, b, kind, chain:!!c.chain, hl:!!c.headline }, 'focusedge'));
+    return;
+  }
+  if (hoverId && EDGE_BY_NODE[hoverId]){
+    EDGE_BY_NODE[hoverId].forEach(e => drawEdge(e, 'hoveredge'));
+    return;
+  }
+  RESTING.forEach(e => drawEdge(e, 'resting'));
+}
+
+/* hover illuminate — only when no filter/convo is steering the view */
+function illuminate(id){
+  if (activeConvo || focus !== 'all' || gateOn || regView !== 'both') return;
+  const partners = new Set([id]);
+  (EDGE_BY_NODE[id] || []).forEach(e => { partners.add(e.a); partners.add(e.b); });
+  allNodeEls.forEach(el => el.classList.toggle('hdim', !partners.has(el.dataset.id)));
+}
+function clearIlluminate(){ allNodeEls.forEach(el => el.classList.remove('hdim')); }
+
+/* ============================================================
+   Filters / toggles
+   ============================================================ */
+let focus = 'all', regView = 'both', gateOn = false;
+
+function applyDim(){
+  allNodeEls.forEach(el => {
+    let lit = true;
+    const reg = el.dataset.register, dp = (el.dataset.dp || '').split(',').filter(Boolean), gate = el.dataset.gate === '1';
+    // focus
+    if (focus !== 'all'){
+      if (focus.startsWith('dp')) lit = dp.includes(focus);
+      else if (focus === 'critical') lit = reg === 'critical';
+      else if (focus === 'grey') lit = reg === 'grey';
+      else if (focus === 'problem') lit = reg === 'problem' || reg === 'grey';
+      else if (focus === 'design') lit = reg === 'design';
+      else if (focus === 'postA3') lit = reg === 'postA3';
+    }
+    // register view
+    if (lit && regView !== 'both'){
+      if (regView === 'problem') lit = (reg === 'problem' || reg === 'grey');
+      else if (regView === 'design') lit = (reg === 'design' || reg === 'critical');
+    }
+    // gate highlight
+    if (lit && gateOn) lit = gate;
+    // active conversation overrides everything
+    if (activeConvo){
+      lit = CONVERSATIONS[activeConvo].nodes.includes(el.dataset.id);
+    }
+    el.classList.toggle('dim', !lit);
+  });
+}
+
+function setFocus(f){
+  focus = f;
+  document.querySelectorAll('[data-focus]').forEach(c => c.classList.toggle('on', c.dataset.focus === f));
+  applyDim();
+}
+function setReg(v){
+  regView = v;
+  document.querySelectorAll('[data-reg]').forEach(c => c.classList.toggle('on', c.dataset.reg === v));
+  applyDim(); requestAnimationFrame(drawArcs);
+}
+function setConvo(id){
+  activeConvo = (activeConvo === id) ? null : id;
+  document.querySelectorAll('[data-convo]').forEach(c => c.classList.toggle('on', c.dataset.convo === activeConvo));
+  const banner = $('#convo-banner');
+  if (activeConvo){
+    const c = CONVERSATIONS[activeConvo];
+    banner.style.display = 'block';
+    banner.innerHTML = `<span class="cname">${c.name}</span><div class="cdesc">${c.desc}</div>`;
+  } else { banner.style.display = 'none'; }
+  applyDim();
+  requestAnimationFrame(drawArcs);
+}
+
+/* ============================================================
+   Boot
+   ============================================================ */
+function boot(){
+  buildEdges();
+  renderInstruments();
+  renderList('#problemNodes', PROBLEM);
+  renderDesign();
+  renderList('#criticalNodes', CRITICAL);
+  renderList('#postA3Nodes', POSTA3);
+
+  // gate readout
+  $('#gateN').textContent = META.gate;
+  $('#ft50N').textContent = META.ft50;
+
+  // focus chips
+  document.querySelectorAll('[data-focus]').forEach(c => c.addEventListener('click', () => setFocus(c.dataset.focus)));
+  // register toggle
+  document.querySelectorAll('[data-reg]').forEach(c => c.addEventListener('click', () => setReg(c.dataset.reg)));
+  // gate toggle
+  $('#gateToggle').addEventListener('click', () => {
+    gateOn = !gateOn;
+    $('#gateToggle').classList.toggle('on', gateOn);
+    applyDim();
+  });
+  // conversations
+  document.querySelectorAll('[data-convo]').forEach(c => c.addEventListener('click', () => setConvo(c.dataset.convo)));
+
+  // hover-illuminate: any node lights its conversation partners + draws their arcs
+  wrap.addEventListener('mouseover', e => {
+    const el = e.target.closest('[data-id]');
+    if (!el || !wrap.contains(el)) return;
+    if (el.dataset.id === hoverId) return;
+    hoverId = el.dataset.id;
+    illuminate(hoverId);
+    requestAnimationFrame(drawArcs);
+  });
+  wrap.addEventListener('mouseleave', () => {
+    hoverId = null; clearIlluminate(); requestAnimationFrame(drawArcs);
+  });
+
+  // release on empty click
+  wrap.addEventListener('click', e => { if (e.target === wrap || e.target === svg) { /* keep */ } });
+
+  // pin the stack width to the flow row so the foundation fills it (not expands it)
+  const flowRow = document.querySelector('.hstack .hrow');
+  const hstack = document.querySelector('.hstack');
+  const pinStack = () => { if (flowRow && hstack){ hstack.style.width = ''; hstack.style.width = flowRow.scrollWidth + 'px'; } };
+
+  let raf;
+  const redraw = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { pinStack(); drawArcs(); }); };
+  window.addEventListener('resize', redraw);
+  // redraw after fonts/layout settle
+  pinStack();
+  setTimeout(() => { pinStack(); drawArcs(); }, 60);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { pinStack(); drawArcs(); });
+}
+document.addEventListener('DOMContentLoaded', boot);
+
+</script>
+</body>
+</html>
