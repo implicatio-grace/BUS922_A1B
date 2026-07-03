@@ -9,11 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f1;--paper:#fbfaf6;--ink:#1c1c1a;--ink-2:#3b3a36;--muted:#7a7872;--muted-2:#9a9890;
-    --line:#d8d4ca;--line-2:#bdb8aa;
-    --grey:#5F5E5A;--grey-fill:#F1EFE8;
-    --teal:#0F6E56;--teal-fill:#E1F5EE;
-    --coral:#993C1D;--coral-fill:#FAECE7;
+    --bg:oklch(0.985 0.002 250);--paper:#ffffff;--ink:oklch(0.27 0.012 250);--ink-2:oklch(0.42 0.014 250);--muted:oklch(0.56 0.012 250);--muted-2:oklch(0.70 0.01 250);
+    --line:oklch(0.905 0.004 250);--line-2:oklch(0.83 0.006 250);
+    --grey:oklch(0.55 0.012 250);--grey-fill:oklch(0.965 0.004 250);
+    --teal:oklch(0.58 0.10 180);--teal-fill:oklch(0.965 0.03 180);
+    --coral:oklch(0.63 0.15 30);--coral-fill:oklch(0.96 0.035 30);
+    --a2:oklch(0.62 0.07 245);--a2-fill:oklch(0.965 0.02 245);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
@@ -24,7 +25,7 @@
     text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-block;margin-bottom:30px;}
   .back:hover{color:var(--ink);}
   .eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;
-    text-transform:uppercase;letter-spacing:0.16em;color:var(--coral);}
+    text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);}
   h1{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:34px;line-height:1.12;
     letter-spacing:-0.015em;margin:14px 0 0;text-wrap:balance;}
   .lede{color:var(--muted);font-size:14.5px;line-height:1.65;max-width:62ch;margin:16px 0 0;}
@@ -49,17 +50,17 @@
   .arr{stroke:#73726C;stroke-width:1.4;fill:none;}
 
   .honest{margin-top:30px;background:var(--paper);border:1px solid var(--line);
-    border-left:3px solid var(--coral);border-radius:0 10px 10px 0;padding:18px 22px;max-width:72ch;}
+    border-left:3px solid var(--grey);border-radius:0 10px 10px 0;padding:18px 22px;max-width:72ch;}
   .honest .h{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:0.1em;
-    text-transform:uppercase;color:var(--coral);}
+    text-transform:uppercase;color:var(--muted);}
   .honest p{font-size:13.5px;line-height:1.65;color:var(--ink-2);margin:8px 0 0;}
   .honest p em{color:var(--muted);}
 
   .foot{margin-top:40px;font-family:"JetBrains Mono",monospace;font-size:10.5px;
     text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-2);line-height:1.9;}
   @media print{html,body{background:#fff;} .figwrap,.honest{break-inside:avoid;} .back{display:none;}}
-  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7872;text-decoration:none;border-bottom:1px solid #bdb8aa;transition:color .14s,border-color .14s;}
-  .reflink:hover{color:#1c1c1a;border-color:#1c1c1a;}
+  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.56 0.012 250);text-decoration:none;border-bottom:1px solid oklch(0.83 0.006 250);transition:color .14s,border-color .14s;}
+  .reflink:hover{color:oklch(0.27 0.012 250);border-color:oklch(0.27 0.012 250);}
 </style>
 </head>
 <body>
@@ -71,7 +72,7 @@
 
     <div class="legend">
       <span class="mchip"><span class="d" style="background:var(--grey)"></span><b>&rarr; A1B</b> proposed · 28 Jun</span>
-      <span class="mchip"><span class="d" style="background:var(--coral)"></span><b>&rarr; A2</b> preview</span>
+      <span class="mchip"><span class="d" style="background:var(--a2)"></span><b>&rarr; A2</b> preview</span>
       <span class="mchip"><span class="d" style="background:var(--teal)"></span><b>&rarr; A3</b> evidenced</span>
       <span class="note">solid = in scope · dashed = post-A3, informs the direction</span>
     </div>
@@ -118,14 +119,14 @@
 
         <!-- HINGE -->
         <g>
-          <rect x="151" y="122" width="300" height="66" rx="8" fill="var(--coral-fill)" stroke="var(--coral)" stroke-width="1.1"></rect>
-          <text class="th" x="301" y="142" fill="#4A1B0C" text-anchor="middle">Strategy synthesis — the turning point</text>
-          <text class="ts" x="301" y="160" fill="#712B13" text-anchor="middle"><tspan x="301">weakness × opportunity</tspan><tspan x="301" dy="15">capability to build × easy AI capture</tspan></text>
+          <rect x="151" y="122" width="300" height="66" rx="8" fill="var(--grey-fill)" stroke="var(--grey)" stroke-width="1.1"></rect>
+          <text class="th" x="301" y="142" fill="oklch(0.30 0.012 250)" text-anchor="middle">Strategy synthesis — the turning point</text>
+          <text class="ts" x="301" y="160" fill="oklch(0.34 0.012 250)" text-anchor="middle"><tspan x="301">weakness × opportunity</tspan><tspan x="301" dy="15">capability to build × easy AI capture</tspan></text>
         </g>
         <g transform="translate(595,134)">
-          <rect x="0" y="0" width="130" height="30" rx="7" fill="#fff" stroke="var(--coral)" stroke-width="0.9"></rect>
-          <circle cx="13" cy="15" r="4" fill="var(--coral)"></circle>
-          <text class="chip" x="24" y="19" fill="#712B13">&rarr; A2 · A3</text>
+          <rect x="0" y="0" width="130" height="30" rx="7" fill="#fff" stroke="var(--grey)" stroke-width="0.9"></rect>
+          <circle cx="13" cy="15" r="4" fill="var(--grey)"></circle>
+          <text class="chip" x="24" y="19" fill="oklch(0.34 0.012 250)">&rarr; A2 · A3</text>
         </g>
 
         <line x1="301" y1="192" x2="301" y2="218" class="arr" marker-end="url(#arrow)"></line>
@@ -191,7 +192,7 @@
           <text class="ts" x="18" y="10" fill="var(--muted)">problem · industry sources</text>
           <rect x="200" y="0" width="12" height="12" rx="3" fill="var(--teal-fill)" stroke="var(--teal)" stroke-width="0.6"></rect>
           <text class="ts" x="218" y="10" fill="var(--muted)">design · research-backed</text>
-          <rect x="420" y="0" width="12" height="12" rx="3" fill="var(--coral-fill)" stroke="var(--coral)" stroke-width="1"></rect>
+          <rect x="420" y="0" width="12" height="12" rx="3" fill="var(--grey-fill)" stroke="var(--grey)" stroke-width="1"></rect>
           <text class="ts" x="438" y="10" fill="var(--muted)">the turning point</text>
           <rect x="566" y="0" width="12" height="12" rx="3" fill="var(--grey-fill)" stroke="var(--grey)" stroke-width="0.6" stroke-dasharray="3 2"></rect>
           <text class="ts" x="584" y="10" fill="var(--muted)">post-A3</text>

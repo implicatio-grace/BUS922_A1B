@@ -9,20 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f1;
-    --paper:#fbfaf6;
-    --paper-2:#f3efe5;
-    --ink:#1c1c1a;
-    --ink-2:#3b3a36;
-    --muted:#7a7872;
-    --muted-2:#9a9890;
-    --line:#d8d4ca;
-    --line-2:#bdb8aa;
+    --bg:oklch(0.985 0.002 250);
+    --paper:#ffffff;
+    --paper-2:oklch(0.965 0.003 250);
+    --ink:oklch(0.27 0.012 250);
+    --ink-2:oklch(0.42 0.014 250);
+    --muted:oklch(0.56 0.012 250);
+    --muted-2:oklch(0.70 0.01 250);
+    --line:oklch(0.905 0.004 250);
+    --line-2:oklch(0.83 0.006 250);
     /* two-register figure palette (from the integration-spine SVG) */
-    --grey:#5F5E5A;
-    --teal:#0F6E56;
-    --coral:#993C1D;
-    --nautical:#133A5C;
+    --grey:oklch(0.55 0.012 250);
+    --teal:oklch(0.58 0.10 180);
+    --coral:oklch(0.63 0.15 30);
+    --nautical:oklch(0.53 0.12 250);
+    --a2:oklch(0.62 0.07 245);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
@@ -54,7 +55,7 @@
     display:grid;place-items:center;letter-spacing:0.02em;align-self:flex-start;margin-top:2px;}
   .card.origin{--dot:var(--nautical);}
   .card.slice{--dot:var(--teal);}
-  .card.map{--dot:var(--coral);}
+  .card.map{--dot:var(--a2);}
   .card.terr{--dot:var(--grey);}
   .ctitle{font-family:"Fraunces","Source Serif Pro",Georgia,serif;font-size:21px;
     font-weight:400;letter-spacing:-0.01em;line-height:1.15;}

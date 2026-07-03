@@ -9,20 +9,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f1;
-    --paper:#fbfaf6;
-    --paper-2:#f3efe5;
-    --ink:#1c1c1a;
-    --ink-2:#3b3a36;
-    --muted:#7a7872;
-    --muted-2:#9a9890;
-    --line:#d8d4ca;
-    --line-2:#bdb8aa;
-    --yes:#0F6E56;     /* teal — ✓ */
+    --bg:oklch(0.985 0.002 250);
+    --paper:#ffffff;
+    --paper-2:oklch(0.965 0.003 250);
+    --ink:oklch(0.27 0.012 250);
+    --ink-2:oklch(0.42 0.014 250);
+    --muted:oklch(0.56 0.012 250);
+    --muted-2:oklch(0.70 0.01 250);
+    --line:oklch(0.905 0.004 250);
+    --line-2:oklch(0.83 0.006 250);
+    --yes:oklch(0.58 0.10 180);     /* teal — ✓ */
     --part:#6E5A1E;    /* bronze — ◑ */
-    --no:#993C1D;      /* coral — ✗ */
-    --open:#7a7872;    /* grey — ? */
-    --navy:#133A5C;
+    --no:oklch(0.63 0.15 30);      /* coral — ✗ */
+    --open:oklch(0.56 0.012 250);    /* grey — ? */
+    --navy:oklch(0.53 0.12 250);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
@@ -71,10 +71,10 @@
   .impl b{font-style:normal;font-weight:500;font-family:"JetBrains Mono",ui-monospace,monospace;
     font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ac);margin-right:7px;vertical-align:1.5px;}
 
-  .res.r3 .rname{color:#fbfaf6;} .res.r3 .rbody{color:#d8d4cf;} .res.r3 cite{color:#a8a49c;}
-  .res.r3 .impl{color:#f3efe5;} .res.r3 .rnum{color:#cdbfd1;}
+  .res.r3 .rname{color:#ffffff;} .res.r3 .rbody{color:#d8d4cf;} .res.r3 cite{color:#a8a49c;}
+  .res.r3 .impl{color:oklch(0.965 0.003 250);} .res.r3 .rnum{color:#cdbfd1;}
   .flag{display:inline-block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;
-    text-transform:uppercase;letter-spacing:0.12em;color:#1c1c1a;background:#cdbfd1;
+    text-transform:uppercase;letter-spacing:0.12em;color:oklch(0.27 0.012 250);background:#cdbfd1;
     border-radius:5px;padding:3px 8px;margin-top:11px;}
 
   /* VRIO badge strip */
@@ -82,12 +82,12 @@
   .vcell{text-align:center;}
   .vk{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:0.1em;
     color:var(--muted);margin-bottom:7px;}
-  .res.r3 .vk{color:#9a9890;}
+  .res.r3 .vk{color:oklch(0.70 0.01 250);}
   .vglyph{width:44px;height:44px;margin:0 auto;border-radius:10px;display:grid;place-items:center;
     font-size:19px;color:#fff;font-weight:600;}
   .vsub{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:7.5px;text-transform:uppercase;
     letter-spacing:0.08em;color:var(--muted);margin-top:7px;line-height:1.3;}
-  .res.r3 .vsub{color:#9a9890;}
+  .res.r3 .vsub{color:oklch(0.70 0.01 250);}
   .vyes{background:var(--yes);} .vpart{background:var(--part);}
   .vno{background:var(--no);} .vopen{background:var(--open);}
 
@@ -125,8 +125,8 @@
     .res,.hinge{break-inside:avoid;}
     .figback{display:none;}
   }
-  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7872;text-decoration:none;border-bottom:1px solid #bdb8aa;transition:color .14s,border-color .14s;}
-  .reflink:hover{color:#1c1c1a;border-color:#1c1c1a;}
+  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.56 0.012 250);text-decoration:none;border-bottom:1px solid oklch(0.83 0.006 250);transition:color .14s,border-color .14s;}
+  .reflink:hover{color:oklch(0.27 0.012 250);border-color:oklch(0.27 0.012 250);}
 </style>
 </head>
 <body>

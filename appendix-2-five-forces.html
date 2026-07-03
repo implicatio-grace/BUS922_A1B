@@ -9,18 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f1;
-    --paper:#fbfaf6;
-    --paper-2:#f3efe5;
-    --ink:#1c1c1a;
-    --ink-2:#3b3a36;
-    --muted:#7a7872;
-    --muted-2:#9a9890;
-    --line:#d8d4ca;
-    --line-2:#bdb8aa;
-    --rivalry:#133A5C;       /* nautical navy */
-    --entrants:#0F6E56;      /* teal */
-    --suppliers:#993C1D;     /* coral — strongest force */
+    --bg:oklch(0.985 0.002 250);
+    --paper:#ffffff;
+    --paper-2:oklch(0.965 0.003 250);
+    --ink:oklch(0.27 0.012 250);
+    --ink-2:oklch(0.42 0.014 250);
+    --muted:oklch(0.56 0.012 250);
+    --muted-2:oklch(0.70 0.01 250);
+    --line:oklch(0.905 0.004 250);
+    --line-2:oklch(0.83 0.006 250);
+    --rivalry:oklch(0.53 0.12 250);       /* nautical navy */
+    --entrants:oklch(0.58 0.10 180);      /* teal */
+    --suppliers:oklch(0.63 0.15 30);     /* coral — strongest force */
     --buyers:#6E5A1E;        /* bronze */
     --substitutes:#553A5E;   /* plum */
   }
@@ -79,14 +79,14 @@
     font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--c);margin-right:7px;vertical-align:1.5px;}
 
   /* center — rivalry, anchored dark */
-  .cell.rivalry{background:var(--ink);border:0;color:#f3efe5;justify-content:center;}
-  .cell.rivalry .cname{color:#fbfaf6;font-size:23px;}
+  .cell.rivalry{background:var(--ink);border:0;color:oklch(0.965 0.003 250);justify-content:center;}
+  .cell.rivalry .cname{color:#ffffff;font-size:23px;}
   .cell.rivalry .clabel{color:var(--muted-2);}
   .cell.rivalry .body{color:#d8d4cf;}
   .cell.rivalry .sword{color:#cdbfd1;}
-  .cell.rivalry .sdots i{border-color:#9a9890;}
+  .cell.rivalry .sdots i{border-color:oklch(0.70 0.01 250);}
   .cell.rivalry .sdots i.on{background:#cdbfd1;border-color:#cdbfd1;}
-  .cell.rivalry .whale{border-top-color:#46443f;color:#f3efe5;}
+  .cell.rivalry .whale{border-top-color:#46443f;color:oklch(0.965 0.003 250);}
   .cell.rivalry .whale b{color:#cdbfd1;}
   .corelabel{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:8.5px;
     text-transform:uppercase;letter-spacing:0.18em;color:var(--muted-2);margin-bottom:10px;}
@@ -122,8 +122,8 @@
     .cell,.verdict{break-inside:avoid;}
     .figback{display:none;}
   }
-  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7872;text-decoration:none;border-bottom:1px solid #bdb8aa;transition:color .14s,border-color .14s;}
-  .reflink:hover{color:#1c1c1a;border-color:#1c1c1a;}
+  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.56 0.012 250);text-decoration:none;border-bottom:1px solid oklch(0.83 0.006 250);transition:color .14s,border-color .14s;}
+  .reflink:hover{color:oklch(0.27 0.012 250);border-color:oklch(0.27 0.012 250);}
 </style>
 </head>
 <body>

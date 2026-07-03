@@ -9,19 +9,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f1;
-    --paper:#fbfaf6;
-    --paper-2:#f3efe5;
-    --ink:#1c1c1a;
-    --ink-2:#3b3a36;
-    --muted:#7a7872;
-    --muted-2:#9a9890;
-    --line:#d8d4ca;
-    --line-2:#bdb8aa;
-    --teal:#0F6E56;
-    --navy:#133A5C;
-    --coral:#993C1D;
-    --grey:#5F5E5A;
+    --bg:oklch(0.985 0.002 250);
+    --paper:#ffffff;
+    --paper-2:oklch(0.965 0.003 250);
+    --ink:oklch(0.27 0.012 250);
+    --ink-2:oklch(0.42 0.014 250);
+    --muted:oklch(0.56 0.012 250);
+    --muted-2:oklch(0.70 0.01 250);
+    --line:oklch(0.905 0.004 250);
+    --line-2:oklch(0.83 0.006 250);
+    --teal:oklch(0.58 0.10 180);
+    --navy:oklch(0.53 0.12 250);
+    --coral:oklch(0.63 0.15 30);
+    --grey:oklch(0.55 0.012 250);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
@@ -42,7 +42,7 @@
   .lede{color:var(--muted);font-size:14px;line-height:1.65;max-width:70ch;margin:18px 0 0;}
 
   /* ── convergence panel — the "three altitudes → one conclusion" preamble ── */
-  .converge{margin:34px 0 0;background:var(--ink);color:#f3efe5;border-radius:14px;padding:28px 30px 26px;}
+  .converge{margin:34px 0 0;background:var(--ink);color:oklch(0.965 0.003 250);border-radius:14px;padding:28px 30px 26px;}
   .converge .clab{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;
     text-transform:uppercase;letter-spacing:0.16em;color:var(--muted-2);margin-bottom:13px;}
   .converge p{margin:0;font-family:"Fraunces",Georgia,serif;font-size:20px;line-height:1.5;
@@ -52,7 +52,7 @@
   .alt{flex:1;min-width:180px;border:1px solid #46443f;border-radius:10px;padding:13px 15px;}
   .alt .k{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9px;text-transform:uppercase;
     letter-spacing:0.12em;color:var(--muted-2);}
-  .alt .lens{font-family:"Fraunces",Georgia,serif;font-size:18px;color:#fbfaf6;margin-top:5px;letter-spacing:-0.01em;}
+  .alt .lens{font-family:"Fraunces",Georgia,serif;font-size:18px;color:#ffffff;margin-top:5px;letter-spacing:-0.01em;}
   .alt .verb{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:14.5px;margin-top:7px;
     padding-top:9px;border-top:1px dashed #46443f;}
   .alt.macro .verb{color:#8FC7B4;} .alt.industry .verb{color:#9FB8D0;} .alt.firm .verb{color:#D8A794;}
@@ -109,8 +109,8 @@
     a.card,.converge{break-inside:avoid;box-shadow:none;}
     .wrap{padding:32px;}
   }
-  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7872;text-decoration:none;border-bottom:1px solid #bdb8aa;transition:color .14s,border-color .14s;}
-  .reflink:hover{color:#1c1c1a;border-color:#1c1c1a;}
+  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.56 0.012 250);text-decoration:none;border-bottom:1px solid oklch(0.83 0.006 250);transition:color .14s,border-color .14s;}
+  .reflink:hover{color:oklch(0.27 0.012 250);border-color:oklch(0.27 0.012 250);}
 </style>
 </head>
 <body>

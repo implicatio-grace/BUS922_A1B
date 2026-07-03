@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BUS922 A1B · Evidence landscape v2 · horizontal</title>
+<title>BUS922 A1B · Evidence landscape v3 · discipline layer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f5f1;--paper:#fbfaf6;--ink:#1c1c1a;--ink-2:#3b3a36;--muted:#7a7872;--muted-2:#9a9890;
-    --line:#d8d4ca;--line-2:#bdb8aa;
-    --grey:#5F5E5A;--grey-fill:#F1EFE8;
-    --navy:#133A5C;--navy-fill:#E7EDF3;
-    --teal:#0F6E56;--teal-fill:#E1F5EE;--teal-fill-2:#EFF8F4;
-    --coral:#993C1D;--coral-fill:#FAECE7;
-    --green:#0F6E56;--amber:#9A6A1E;
+    --bg:oklch(0.985 0.002 250);--paper:#ffffff;--ink:oklch(0.27 0.012 250);--ink-2:oklch(0.42 0.014 250);--muted:oklch(0.56 0.012 250);--muted-2:oklch(0.70 0.01 250);
+    --line:oklch(0.905 0.004 250);--line-2:oklch(0.83 0.006 250);
+    --grey:oklch(0.55 0.012 250);--grey-fill:oklch(0.965 0.004 250);
+    --navy:oklch(0.53 0.12 250);--navy-fill:oklch(0.965 0.03 250);
+    --teal:oklch(0.58 0.10 180);--teal-fill:oklch(0.965 0.03 180);--teal-fill-2:oklch(0.98 0.015 180);
+    --coral:oklch(0.63 0.15 30);--coral-fill:oklch(0.96 0.035 30);
+    --crit:oklch(0.52 0.06 285);
+    --convo:oklch(0.70 0.185 55);--convo-fill:oklch(0.965 0.04 55);
+    --green:oklch(0.58 0.10 180);--amber:oklch(0.55 0.012 250);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
@@ -57,7 +59,7 @@
     padding:6px 11px;cursor:pointer;transition:.14s;line-height:1;}
   .chip:hover{border-color:var(--grey);}
   .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;}
-  .chip.convo-chip.on{background:var(--coral);border-color:var(--coral);}
+  .chip.convo-chip.on{background:var(--convo);border-color:var(--convo);}
   .chip.chain-chip{border-style:dashed;}
   .chip.chain-chip.on{background:var(--teal);border-color:var(--teal);}
   .seg{display:inline-flex;border:1px solid var(--line-2);border-radius:7px;overflow:hidden;}
@@ -80,7 +82,7 @@
   .edge.interpretive{stroke-width:1.3;opacity:.6;}
   .edge.consistent-with{stroke-width:1.2;stroke-dasharray:3 4;opacity:.6;}
   .edge.chain{stroke:var(--teal);stroke-width:2.6;opacity:.9;}
-  .edge.hl{stroke:var(--coral);stroke-width:2.6;opacity:.95;}
+  .edge.hl{stroke:var(--convo);stroke-width:2.6;opacity:.95;}
   .edge.resting{opacity:.15;stroke-width:1.3;}
   .edge.resting.chain{opacity:.32;stroke-width:1.7;}
   .edge.resting.hl{opacity:.24;stroke-width:1.6;}
@@ -142,9 +144,9 @@
     background:var(--navy);color:#fff;border-radius:3px;padding:1px 4px;}
   .node[data-register="problem"]{border-left-color:var(--navy);}
   .node[data-register="design"]{border-left-color:var(--teal);}
-  .node[data-register="critical"]{border-left-color:var(--coral);}
+  .node[data-register="critical"]{border-left-color:var(--crit);}
   .node[data-register="postA3"]{border-left-color:var(--muted-2);border-style:dashed;}
-  .node.frame{background:#fcfbf8;}
+  .node.frame{background:oklch(0.975 0.004 250);}
   .node.fenced,.node.suppl{opacity:.82;}
   .node.dim-perm{opacity:.6;}
   .node.dim{opacity:.16;filter:grayscale(.5);pointer-events:none;}
@@ -158,7 +160,7 @@
   .lane-head{cursor:pointer;}
   .lane-id{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.06em;color:var(--teal);
     display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
-  .hbadge{background:var(--coral);color:#fff;border-radius:4px;padding:1px 6px;font-size:8px;letter-spacing:0.08em;}
+  .hbadge{background:var(--teal);color:#fff;border-radius:4px;padding:1px 6px;font-size:8px;letter-spacing:0.08em;}
   .lane-head h3{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:17px;line-height:1.16;
     margin:7px 0 0;color:#04342C;}
   .lane-gist{font-size:11px;line-height:1.5;color:var(--ink-2);margin:8px 0 0;}
@@ -166,26 +168,26 @@
   .lane-nodes .node{width:100%;}
 
   /* hinge — calm: paper ground, soft left accent, muted coral (companion recipe) */
-  .hinge{position:relative;z-index:2;margin-top:16px;background:color-mix(in oklch, var(--coral) 3.5%, var(--paper));
-    border:1px solid var(--line);border-left:3px solid color-mix(in oklch, var(--coral) 42%, var(--line));
+  .hinge{position:relative;z-index:2;margin-top:16px;background:color-mix(in oklch, var(--grey) 3.5%, var(--paper));
+    border:1px solid var(--line);border-left:3px solid color-mix(in oklch, var(--grey) 42%, var(--line));
     border-radius:10px;padding:17px 22px;}
   .hinge .tag{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.1em;
-    text-transform:uppercase;color:color-mix(in oklch, var(--coral) 60%, var(--muted));}
+    text-transform:uppercase;color:color-mix(in oklch, var(--grey) 60%, var(--muted));}
   .hinge-legs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 0;}
-  .leg{background:#fff;border:1px solid var(--coral);border-radius:8px;padding:9px 11px;}
-  .leg .k{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--coral);}
-  .leg .v{font-size:11px;line-height:1.45;color:#712B13;margin-top:4px;}
-  .hinge .gap{font-family:"Fraunces",Georgia,serif;font-size:18px;line-height:1.45;color:#3a2c25;
+  .leg{background:#fff;border:1px solid var(--grey);border-radius:8px;padding:9px 11px;}
+  .leg .k{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--grey);}
+  .leg .v{font-size:11px;line-height:1.45;color:oklch(0.34 0.012 250);margin-top:4px;}
+  .hinge .gap{font-family:"Fraunces",Georgia,serif;font-size:18px;line-height:1.45;color:oklch(0.32 0.010 250);
     margin:13px 0 0;max-width:78ch;text-wrap:pretty;}
-  .hinge .gap em{font-style:italic;color:color-mix(in oklch, var(--coral) 68%, var(--muted));}
+  .hinge .gap em{font-style:italic;color:color-mix(in oklch, var(--grey) 68%, var(--muted));}
   .hinge .note{font-size:11.5px;color:var(--ink-2);opacity:.9;margin:10px 0 0;max-width:74ch;font-style:italic;}
   .hinge .defer{margin:13px 0 0;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.04em;
-    text-transform:uppercase;color:color-mix(in oklch, var(--coral) 55%, var(--muted));opacity:.9;border-top:1px dashed var(--line);padding-top:11px;}
+    text-transform:uppercase;color:color-mix(in oklch, var(--grey) 55%, var(--muted));opacity:.9;border-top:1px dashed var(--line);padding-top:11px;}
   .hinge .defer b{font-weight:500;}
   .triple{margin:11px 0 0;display:inline-flex;gap:9px;align-items:center;background:var(--paper);
-    border:1px dashed color-mix(in oklch, var(--coral) 30%, var(--line));
+    border:1px dashed color-mix(in oklch, var(--grey) 30%, var(--line));
     border-radius:8px;padding:8px 12px;cursor:default;}
-  .triple .tk{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in oklch, var(--coral) 55%, var(--muted));}
+  .triple .tk{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in oklch, var(--grey) 55%, var(--muted));}
   .triple .tv{font-size:11.5px;color:var(--ink-2);}
   .triple .tv b{font-family:"Fraunces",serif;font-weight:400;font-style:italic;}
 
@@ -193,10 +195,10 @@
   .tick{position:relative;z-index:2;display:flex;justify-content:center;color:var(--muted-2);font-size:18px;margin:8px 0 2px;}
 
   /* convo banner */
-  #convo-banner{display:none;position:relative;z-index:2;margin:6px 0 0;background:#fff;
-    border:1px solid var(--coral);border-left-width:3px;border-radius:10px;padding:13px 17px;}
-  .cname{font-family:"Fraunces",serif;font-size:16px;color:#4A1B0C;}
-  .clin{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.06em;color:var(--coral);margin-left:10px;}
+  #convo-banner{display:none;position:relative;z-index:2;margin:18px 0 0;background:#fff;
+    border:1px solid var(--convo);border-left-width:3px;border-radius:10px;padding:13px 17px;}
+  .cname{font-family:"Fraunces",serif;font-size:16px;color:oklch(0.30 0.012 250);}
+  .clin{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.06em;color:var(--convo);margin-left:10px;}
   .cdesc{font-size:12px;line-height:1.55;color:var(--ink-2);margin-top:7px;max-width:92ch;}
 
   /* detail panel */
@@ -208,7 +210,7 @@
   .rankchip{display:inline-flex;gap:7px;align-items:center;font-family:"JetBrains Mono",monospace;
     font-size:10.5px;border-radius:7px;padding:6px 10px;border:1px solid;line-height:1.3;}
   .rankchip.green{color:var(--green);border-color:rgba(15,110,86,.4);background:var(--teal-fill-2);}
-  .rankchip.amber{color:var(--amber);border-color:rgba(154,106,30,.4);background:#F6EEDC;}
+  .rankchip.amber{color:var(--grey);border-color:var(--line-2);background:var(--grey-fill);}
   .rankchip.grey{color:var(--grey);border-color:var(--line-2);background:var(--grey-fill);}
   .rankchip .dots{letter-spacing:1px;}
   .reglab{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.06em;
@@ -289,8 +291,136 @@
   .hrow.lower .nodes{display:flex;flex-wrap:wrap;gap:8px;}
 
   @media print{.hscroll{overflow:visible;}}
-  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#7a7872;text-decoration:none;border-bottom:1px solid #bdb8aa;transition:color .14s,border-color .14s;}
-  .reflink:hover{color:#1c1c1a;border-color:#1c1c1a;}
+  .reflink{display:inline-block;margin:26px 0 0;padding-bottom:2px;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:oklch(0.56 0.012 250);text-decoration:none;border-bottom:1px solid oklch(0.83 0.006 250);transition:color .14s,border-color .14s;}
+  .reflink:hover{color:oklch(0.27 0.012 250);border-color:oklch(0.27 0.012 250);}
+
+  /* ============================================================
+     DISCIPLINE LAYER (v3) — family colour · convergence · 2nd view
+     Node left-accent now encodes the SOURCE-LITERATURE FAMILY;
+     register is carried by the column/section it sits in.
+     Families (oklch, shared chroma ~0.09, varied hue):
+     ============================================================ */
+  :root{
+    --fam-sm: oklch(0.64 0.14 256);   /* Strategic management & M&A — blue (aligns site navy) */
+    --fam-ls: oklch(0.62 0.07 245);  /* Learning sciences — teal (aligns site design teal) */
+    --fam-km: oklch(0.86 0.15 101);    /* Knowledge management — ochre */
+    --fam-ctx:oklch(0.62 0.012 250);   /* Context framing — warm grey (not a discipline) */
+  }
+  .lgd-lab{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted-2);}
+
+  /* per-node family accent (overrides the register border set earlier) */
+  .node[data-family="SM"]{border-left-color:var(--fam-sm);}
+  .node[data-family="LS"]{border-left-color:var(--fam-ls);}
+  .node[data-family="KM"]{border-left-color:var(--fam-km);}
+  .node[data-family="CTX"]{border-left-color:var(--fam-ctx);}
+
+  /* family swatch + tag (detail panel, chips) */
+  .fsw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none;}
+  .fsw.sm{background:var(--fam-sm);} .fsw.ls{background:var(--fam-ls);} .fsw.km{background:var(--fam-km);} .fsw.ctx{background:var(--fam-ctx);}
+  .famtag{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono",monospace;font-size:10px;
+    letter-spacing:0.02em;padding:3px 9px;border-radius:6px;border:1px solid;line-height:1.35;}
+  .famtag::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor;}
+  .famtag.sm{color:var(--fam-sm);border-color:color-mix(in oklch,var(--fam-sm) 40%,transparent);background:color-mix(in oklch,var(--fam-sm) 8%,var(--paper));}
+  .famtag.ls{color:var(--fam-ls);border-color:color-mix(in oklch,var(--fam-ls) 40%,transparent);background:color-mix(in oklch,var(--fam-ls) 8%,var(--paper));}
+  .famtag.km{color:var(--fam-km);border-color:color-mix(in oklch,var(--fam-km) 40%,transparent);background:color-mix(in oklch,var(--fam-km) 10%,var(--paper));}
+  .famtag.ctx{color:oklch(0.50 0.012 250);border-color:var(--line-2);background:var(--grey-fill);}
+  .dislab{margin-top:9px;}
+
+  /* family focus chips */
+  .chip.fam-chip{display:inline-flex;align-items:center;gap:7px;}
+  .chip.fam-chip.on{color:#fff;}
+  .chip.fam-chip[data-fam="SM"].on{background:var(--fam-sm);border-color:var(--fam-sm);}
+  .chip.fam-chip[data-fam="LS"].on{background:var(--fam-ls);border-color:var(--fam-ls);}
+  .chip.fam-chip[data-fam="KM"].on{background:var(--fam-km);border-color:var(--fam-km);}
+  .chip.fam-chip.on .fsw{background:#fff;}
+
+  /* DP3 cross-disciplinary 'warranted-from' badge */
+  .xdbadge{margin-top:11px;display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:0.01em;line-height:1.4;
+    padding:7px 9px;border-radius:8px;background:var(--paper);
+    border:1px solid color-mix(in oklch,var(--fam-sm) 32%,var(--line));}
+  .xdbadge .xd-ic{font-size:13px;color:var(--ink-2);line-height:1;}
+  .xdbadge b.fx{font-weight:500;padding:1px 5px;border-radius:4px;}
+  .xdbadge b.ls{color:var(--fam-ls);background:color-mix(in oklch,var(--fam-ls) 13%,var(--paper));}
+  .xdbadge b.sm{color:var(--fam-sm);background:color-mix(in oklch,var(--fam-sm) 13%,var(--paper));}
+
+  /* cross-family (convergence) edges — literally two literatures meeting */
+  .edge.famcross{stroke-width:2.6;opacity:.9;stroke-linecap:round;}
+  .edge.famcross.resting{opacity:.42;stroke-width:2;}
+  .edge.famcross.focusedge{stroke-width:3;opacity:.98;}
+
+  /* ---- discipline (second) view ---- */
+  .viewpane[hidden]{display:none;}
+  #dlinks{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible;}
+  .dstack{min-width:max-content;position:relative;}
+  .dnote{position:relative;z-index:2;max-width:96ch;font-size:12.5px;line-height:1.6;color:var(--ink-2);
+    background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--coral);
+    border-radius:10px;padding:13px 17px;margin-bottom:18px;}
+  .dnote b{color:var(--ink);font-weight:600;}
+  .dnote .kx{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--coral);}
+  .drow{display:flex;gap:16px;align-items:flex-start;min-width:max-content;position:relative;z-index:2;}
+  .dcol{width:250px;flex:none;background:#fff;border:1px solid var(--line);border-top:2px solid var(--line-2);
+    border-radius:12px;padding:14px 14px 16px;}
+  .dcol.fam-sm{border-top-color:var(--fam-sm);}
+  .dcol.fam-ls{border-top-color:var(--fam-ls);}
+  .dcol.fam-km{border-top-color:var(--fam-km);}
+  .dcol.fam-ctx{border-top-color:var(--fam-ctx);background:color-mix(in oklch,var(--grey) 3%,#fff);}
+  .dcolhead{display:flex;align-items:center;gap:9px;font-family:"Fraunces",Georgia,serif;font-size:16px;
+    color:#2a2a27;padding-bottom:11px;margin-bottom:2px;border-bottom:1px solid var(--line);}
+  .dcolhead .dsw{width:12px;height:12px;border-radius:3px;flex:none;}
+  .dcolhead .dsw.sm{background:var(--fam-sm);} .dcolhead .dsw.ls{background:var(--fam-ls);} .dcolhead .dsw.km{background:var(--fam-km);} .dcolhead .dsw.ctx{background:var(--fam-ctx);}
+  .dcolhead .dct{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);font-weight:400;}
+  .dsub{margin-top:13px;}
+  .dsubhead{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:0.09em;text-transform:uppercase;
+    color:var(--muted-2);margin-bottom:8px;}
+  .dnodes{display:flex;flex-direction:column;gap:7px;}
+  .dnodes .node{width:100%;}
+  .instrument-chip{opacity:.92;}
+
+  /* post-A3 (out-of-scope) pipeline lanes — DP5 / DP6 dimmed */
+  .lane.postA3{border-top-color:var(--line-2);border-top-style:dashed;
+    background:color-mix(in oklch, var(--grey) 3.5%, #fff);}
+  .lane.postA3 .lane-id{color:var(--muted);}
+  .lane.postA3 .lane-head h3{color:#4a4843;}
+  .lane.postA3 .lane-gist{color:var(--muted);}
+  .lane.postA3::before{content:"post-A3";position:absolute;top:-9px;left:12px;
+    font-family:"JetBrains Mono",monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--muted-2);background:var(--bg);padding:0 6px;}
+  .lane.postA3{position:relative;}
+  #designLanes .lane.postA3{opacity:.9;}
+
+  /* critical-engagement positioning strip (full width under the pipeline) */
+  .critstrip{width:100%;margin-top:6px;}
+  .critstrip .colhead{margin-bottom:10px;}
+  .critstrip .nodes{display:flex;flex-wrap:wrap;gap:8px;}
+
+  /* context-framing chip in the hinge column */
+  .hingectx{margin-top:14px;}
+  .hingectx .subhead{margin:0 0 8px;padding-top:0;border-top:0;}
+  .hingectx .subhead .reg{padding:3px 9px;border-radius:5px;font-size:9.5px;letter-spacing:0.06em;}
+
+  /* how-to-use strip (instructional; mirrors the EDGI902 companion, in the clear-light palette) */
+  .howto{
+    margin:10px 0 2px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:6px;
+    background:var(--grey-fill);
+    display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline;
+    font-size:11.5px;color:var(--ink-2);line-height:1.55;
+  }
+  .howto .h{
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;
+    text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);
+    margin-right:2px;
+  }
+  .howto .tip{display:inline-flex;align-items:baseline;gap:6px;}
+  .howto kbd{
+    font-family:"JetBrains Mono",monospace;font-size:10px;
+    background:var(--paper);border:1px solid var(--line);border-bottom-width:1.5px;
+    border-radius:3px;padding:1px 5px;color:var(--ink);
+    text-transform:none;letter-spacing:0;white-space:nowrap;
+  }
+  .howto .sep{color:var(--line-2);}
+  @media print{ .howto{background:transparent;} }
 </style>
 </head>
 <body>
@@ -298,22 +428,7 @@
     <a class="back" href="index.html">&larr; Index</a>
     <div class="eyebrow">BUS922 A1B</div>
     <h1>The evidence landscape</h1>
-    <p class="lede">The same evidence, read <b>left to right</b>: the <b>problem &mdash; the gap</b> (the industry scan + the academic mergers-and-acquisitions research) opens into <b>the synthesis</b>, which opens into <b>the design pipeline</b> (DP1 &rarr; DP4). Every paper is a dot: hover or click for its standing and role. The faint web shows how they relate; hover any paper to light up its connections, or trace the <b>seven conversations</b> from the toolbar. <b>Parallel horizontal cut of v1 &mdash; for comparison.</b></p>
-
-    <div class="bar">
-      <div class="gate"><span class="n" id="gateN">22</span>
-        <span class="lab"><b>journal articles clear the gate</b> &mdash; ABDC A*/A or SCImago Q1 (21 conservative; same-dataset relational pair counted once). Above the 12+ aim and &ge;10 floor.</span></div>
-      <div class="gate ft"><span class="n" id="ft50N">7</span>
-        <span class="lab"><b>FT50</b> among them. Grey instruments are environment-scan &mdash; <b>not</b> gate-counted.</span></div>
-      <div class="spacer"></div>
-      <div class="legend">
-        <span class="it"><span class="sw" style="background:var(--grey)"></span>grey-lit</span>
-        <span class="it"><span class="sw" style="background:var(--navy)"></span>academic problem</span>
-        <span class="it"><span class="sw" style="background:var(--teal)"></span>design</span>
-        <span class="it"><span class="sw" style="background:var(--coral)"></span>critical / hinge</span>
-        <span class="it"><span style="color:var(--green);font-size:8px;letter-spacing:1px">●●●●</span> tier (ABDC/SCImago)</span>
-      </div>
-    </div>
+    <p class="lede">The same evidence, read <b>left to right</b>: the <b>problem &mdash; the gap</b> (the industry scan + the academic mergers-and-acquisitions research) opens into <b>the synthesis</b>, which opens into <b>the design pipeline</b> (DP1 &rarr; DP4). Every paper is a dot, now <b>tinted by the research literature it comes from</b> &mdash; so you can watch two independent literatures (learning sciences &amp; strategic management) converge on <b>DP3</b>, the headline cross-disciplinary move. Hover any paper to light up its connections, trace the <b>seven conversations</b>, or switch the whole landscape to read <b>by discipline</b> from the toolbar.</p>
 
     <div class="toolbar">
       <div class="trow">
@@ -337,6 +452,19 @@
         <button class="toggle" id="gateToggle"><span class="dot"></span>Gate-clearing only</button>
       </div>
       <div class="trow">
+        <span class="tlabel">Layout</span>
+        <span class="seg">
+          <button class="chip on" data-layout="pipeline">Pipeline</button>
+          <button class="chip" data-layout="discipline">By discipline</button>
+        </span>
+        <span style="width:8px"></span>
+        <span class="tlabel">Disciplines</span>
+        <button class="chip fam-chip on" data-fam="all">All</button>
+        <button class="chip fam-chip" data-fam="SM"><span class="fsw sm"></span>Strategic mgmt &amp; M&amp;A</button>
+        <button class="chip fam-chip" data-fam="LS"><span class="fsw ls"></span>Learning sciences</button>
+        <button class="chip fam-chip" data-fam="KM"><span class="fsw km"></span>Knowledge mgmt</button>
+      </div>
+      <div class="trow">
         <span class="tlabel">Conversations</span>
         <button class="chip convo-chip" data-convo="cA">both ends settled</button>
         <button class="chip convo-chip" data-convo="cB">structuring supplied</button>
@@ -350,15 +478,42 @@
       <div class="trow">
         <span class="tlabel">Edge</span>
         <span class="legend">
-          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="2.4"/></svg> mechanistic</span>
-          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="1.8" opacity=".7"/></svg> defensible</span>
-          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="1.3" opacity=".6"/></svg> interpretive</span>
-          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="#3b3a36" stroke-width="1.2" stroke-dasharray="3 4" opacity=".6"/></svg> consistent-with</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="oklch(0.42 0.014 250)" stroke-width="2.4"/></svg> mechanistic</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="oklch(0.42 0.014 250)" stroke-width="1.8" opacity=".7"/></svg> defensible</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="oklch(0.42 0.014 250)" stroke-width="1.3" opacity=".6"/></svg> interpretive</span>
+          <span class="it"><svg width="24" height="6"><line x1="0" y1="3" x2="24" y2="3" stroke="oklch(0.42 0.014 250)" stroke-width="1.2" stroke-dasharray="3 4" opacity=".6"/></svg> consistent-with</span>
+        </span>
+        <span class="spacer"></span>
+        <span class="legend">
+          <span class="it lgd-lab">Discipline</span>
+          <span class="it"><span class="sw" style="background:var(--fam-sm)"></span>Strategic mgmt &amp; M&amp;A</span>
+          <span class="it"><span class="sw" style="background:var(--fam-ls)"></span>Learning sciences</span>
+          <span class="it"><span class="sw" style="background:var(--fam-km)"></span>Knowledge mgmt</span>
+          <span class="it"><span class="sw" style="background:var(--grey)"></span>environment scan &middot; n/a</span>
+          <span class="it"><span style="color:var(--green);font-size:8px;letter-spacing:1px">●●●●</span> tier (ABDC/SCImago)</span>
         </span>
       </div>
     </div>
 
+    <div class="howto" aria-label="How to use this interactive">
+      <span class="h">How to use</span>
+      <span class="tip"><kbd>hover</kbd> or <kbd>click</kbd> any card to highlight it and light the papers it&rsquo;s in conversation with</span>
+      <span class="sep">&middot;</span>
+      <span class="tip"><kbd>Focus</kbd> chips narrow the view to one DP, register, or the grey scan</span>
+      <span class="sep">&middot;</span>
+      <span class="tip"><kbd>Layout</kbd> switches Pipeline &rlarr; By discipline (the same papers regrouped by field)</span>
+      <span class="sep">&middot;</span>
+      <span class="tip"><kbd>Disciplines</kbd> dims to one literature family</span>
+      <span class="sep">&middot;</span>
+      <span class="tip"><kbd>Conversations</kbd> chips draw the cross-paper arcs and a banner (&#9733; = the cross-disciplinary hinge; Causal chain = the spine)</span>
+      <span class="sep">&middot;</span>
+      <span class="tip"><kbd>Gate-clearing only</kbd> shows just the journal-gate papers</span>
+    </div>
+
+    <div id="convo-banner"></div>
+
     <div id="diagram">
+      <div id="pipelineView" class="viewpane">
       <div class="hscroll">
         <svg id="links" aria-hidden="true"></svg>
         <div class="hstack">
@@ -369,11 +524,13 @@
             <div class="colhead"><span class="reg navy">The problem · the gap</span></div>
             <div class="subhead navy">Academic warrant <span class="hint">serial-acquisition / codification</span></div>
             <div class="nodes vert" id="problemNodes"></div>
+            <div class="subhead" style="color:var(--crit);">Positioning <span class="hint">imported-warrant survival</span></div>
+            <div class="nodes vert" id="criticalNodes"></div>
           </div>
 
           <!-- COLUMN 2 · THE HINGE -->
           <div class="hcol hingecol">
-            <div class="colhead"><span class="reg coral">The synthesis</span></div>
+            <div class="colhead"><span class="reg grey">The synthesis</span></div>
             <div class="hinge" data-id="hinge">
               <div class="tag">The hinge &middot; where the gap meets the design</div>
               <!-- A2: worked TOWS 2x2 — DEFERRED to A2 (presentation stage). A1B carries only the W×O proposition below.
@@ -389,26 +546,18 @@
               <p class="note">The W&times;O proposition the study investigates &mdash; a claim about <em>form</em> (not yet designed as one act), not about the partner&rsquo;s data. Five Forces says <em>why</em>; VRIO says <em>what</em>; PESTEL says <em>why now</em>.</p>
               <p class="defer">Full TOWS analysis &mdash; the worked W&times;O matrix (SO &middot; ST &middot; WO &middot; WT) &mdash; developed at <b>A2</b>.</p>
             </div>
+            <div class="hingectx">
+              <div class="subhead"><span class="reg" style="background:#eee;color:var(--muted)">Context framing</span> <span class="hint">why act now</span></div>
+              <div class="nodes" id="postA3Nodes"></div>
+            </div>
           </div>
 
           <!-- COLUMNS 3–6 · DESIGN REGISTER (DP1→DP4) -->
           <div class="desgroup">
-            <div class="colhead design"><span class="reg design">The design &middot; the pipeline</span> <span class="hint">journal-warranted &mdash; reads left to right, DP1 &rarr; DP4</span></div>
+            <div class="colhead design"><span class="reg design">The design &middot; the pipeline</span> <span class="hint">journal-warranted DP1 &rarr; DP4 &middot; then DP5 &rarr; DP6 dimmed (post-A3, informs the direction)</span></div>
             <div id="designLanes"></div>
           </div>
 
-        </div>
-
-        <!-- LOWER BAND · positioning + beyond -->
-        <div class="hrow lower">
-          <div class="hcol widecol">
-            <div class="colhead"><span class="reg coral">Critical engagement &middot; positioning</span> <span class="hint">imported-warrant survival</span></div>
-            <div class="nodes" id="criticalNodes"></div>
-          </div>
-          <div class="hcol widecol">
-            <div class="colhead"><span class="reg" style="background:#eee;color:var(--muted)">Beyond A1B</span> <span class="hint">landscape-informing &mdash; DP5 seed &amp; cumulative-strain framing</span></div>
-            <div class="nodes" id="postA3Nodes"></div>
-          </div>
         </div>
 
         <!-- FOUNDATION · the environment scan as bedrock, full width -->
@@ -419,15 +568,28 @@
 
         </div>
       </div>
+      </div><!-- /pipelineView -->
 
-      <div id="convo-banner"></div>
+      <div id="disciplineView" class="viewpane" hidden>
+        <div class="hscroll">
+          <svg id="dlinks" aria-hidden="true"></svg>
+          <div class="dstack" id="dstack"></div>
+        </div>
+      </div><!-- /disciplineView -->
+    </div>
+
+    <div class="bar">
+      <div class="gate"><span class="n" id="gateN">22</span>
+        <span class="lab"><b>journal articles clear the gate</b> &mdash; ABDC A*/A or SCImago Q1 (21 conservative; same-dataset relational pair counted once). Above the 12+ aim and &ge;10 floor.</span></div>
+      <div class="gate ft"><span class="n" id="ft50N">7</span>
+        <span class="lab"><b>FT50</b> among them. Grey instruments are environment-scan &mdash; <b>not</b> gate-counted.</span></div>
     </div>
 
     <a class="reflink" href="references-bibliography.html">References &amp; bibliography &rarr;</a>
 
     <div class="foot">
       Kali Madden · BUS922 A1B · Dr Nelly Liyanagamage · July 2026<br>
-      The evidence landscape · best viewed on a laptop or desktop
+      The evidence landscape · v3 · discipline layer restored (source-literature families) · best viewed on a laptop or desktop
     </div>
   </div>
 
@@ -526,16 +688,8 @@ const PROBLEM = [
     touch:['dp3'] }
 ];
 
-/* relational-fabric pair + context — out of the bounded slice (post-A1B / DP5) */
+/* context framing — out of the bounded slice (cumulative-strain "why now") */
 const POSTA3 = [
-  { id:'colman', ref:'Colman &amp; Rouzies', yr:2019, register:'postA3', gate:true, ft50:true, dots:4, dim:true,
-    standing:'ABDC A* · Q1 · FT50 #25', venue:'Journal of Management',
-    role:'<b>DP5 seed (out of slice).</b> Integration is a relational accomplishment: pre-existing embedded relationships channel the boundary-spanning that facilitates integration; severing them destroys acquired capability. Grounds <em>why</em> surfacing situated knowledge matters; offers no design guidance for the bounded act.',
-    touch:[] },
-  { id:'rouzies', ref:'Rouzies, Colman &amp; Angwin', yr:2019, register:'postA3', gate:true, ft50:false, dots:3, dim:true,
-    standing:'ABDC A* · Q1', venue:'Long Range Planning',
-    role:'<b>DP5 seed (out of slice).</b> The embeddedness / co-evolving-strain leg &mdash; coordination + cohesion facilitate, disconnection + alienation impede. <span class="conf">Same dataset as Colman &amp; Rouzies (non-independent) &mdash; two lenses on one case, not corroborating studies.</span>',
-    touch:[] },
   { id:'maynard', ref:'Maynard', yr:2020, register:'postA3', gate:false, ft50:false, dots:0, dim:true, frame:true,
     standing:'Book — not gate-eligible', venue:'Future Rising (Pippard&rsquo;s ladder)',
     role:'<b>Context framing (concept-level).</b> Cumulative-strain motivation: complex systems look stable while accumulating stress, then tip non-linearly. The preventive &ldquo;why act now.&rdquo; Practitioner thought leadership &mdash; does not count toward the peer-reviewed gate.',
@@ -607,6 +761,40 @@ const DPS = [
         role:'The <b>situated critique</b> (also a critical-engagement member). Names the &ldquo;fallacy of decontextualisation&rdquo;: stripping context removes meaning. The deepest warrant for &ldquo;don&rsquo;t strip&rdquo; &mdash; and it obliges the slice to adopt the <b>situated view</b> of the contested transfer construct.' },
       { id:'kasper', ref:'Kasper et al.', yr:2010, gate:true, suppl:true, dots:3, standing:'ABDC A · Q1 · supplementary', venue:'J. of Management Inquiry',
         role:'The <b>&ldquo;thinning&rdquo; risk</b> (empirical). Firms strip contextual richness to move knowledge &mdash; rationally and deliberately, even in developed KM systems. So &ldquo;don&rsquo;t decontextualise&rdquo; must be argued against a real organisational pull: the template makes the rich version the low-friction default.' }
+    ] },
+  { id:'dp5', num:'DP5', tag:'trust &amp; sharing', headline:false, postA3:true,
+    title:'Learner-controlled disclosure',
+    gist:'Reflect privately first, then choose what to share &mdash; the learner controls what becomes visible. Sharing is a safe <em>and</em> productive act, not an automatic post. <b>Post-A3 &mdash; informs the direction; outside the bounded slice.</b>',
+    nodes:[
+      { id:'colman', ref:'Colman &amp; Rouzies', yr:2019, register:'postA3', gate:true, ft50:true, dots:4, dim:true,
+        standing:'ABDC A* · Q1 · FT50 #25', venue:'Journal of Management',
+        role:'<b>DP5 seed &mdash; the Strategic-management warrant (out of slice).</b> Integration is a relational accomplishment: pre-existing embedded relationships channel the boundary-spanning that facilitates integration; severing them destroys acquired capability. Grounds <em>why</em> surfacing situated knowledge matters &mdash; the M&amp;A-side seed for a trust-and-sharing design principle.' },
+      { id:'rouzies', ref:'Rouzies, Colman &amp; Angwin', yr:2019, register:'postA3', gate:true, ft50:false, dots:3, dim:true,
+        standing:'ABDC A* · Q1', venue:'Long Range Planning',
+        role:'<b>DP5 seed &mdash; Strategic-management warrant (out of slice).</b> The embeddedness / co-evolving-strain leg. <span class="conf">Same dataset as Colman &amp; Rouzies (non-independent) &mdash; two lenses on one case, not corroborating studies.</span>' },
+      { id:'connelly', ref:'Connelly et al.', yr:2011, register:'postA3', gate:false, dots:0, dim:true, suppl:true,
+        standing:'ABDC A* · landscape-informing · locator pending', venue:'Journal of Organizational Behavior',
+        role:'<b>DP5 anchor (post-A3).</b> Knowledge hiding &mdash; the protective counterpart to sharing. Reflect-for-self, then select-for-sharing; disclosure as a learner-controlled trust mechanism. <span class="conf">Discipline lifted at extraction.</span>' },
+      { id:'petronio', ref:'Petronio', yr:2010, register:'postA3', gate:false, dots:0, dim:true, suppl:true,
+        standing:'landscape-informing · locator pending', venue:'Journal of Family Theory &amp; Review',
+        role:'<b>DP5 anchor (post-A3).</b> Communication privacy management &mdash; disclosure treated as a protective <em>and</em> generative act, not an automatic publish. <span class="conf">Discipline lifted at extraction.</span>' },
+      { id:'frazier', ref:'Frazier et al.', yr:2017, register:'postA3', gate:false, dots:0, dim:true, suppl:true,
+        standing:'ABDC A* · landscape-informing · locator pending', venue:'Personnel Psychology',
+        role:'<b>DP5 anchor (post-A3).</b> Psychological safety &mdash; safe contribution is how newly-acquired, cross-cultural staff build early belonging (the partner&rsquo;s culture-brief bullet). <span class="conf">Discipline lifted at extraction.</span>' }
+    ] },
+  { id:'dp6', num:'DP6', tag:'multiple formats', headline:false, postA3:true,
+    title:'Multiple means of expression',
+    gist:'Let people articulate in their strongest mode &mdash; text, voice, diagram. UDL is the equity frame; generative learning is the effect. <b>Post-A3 &mdash; where the design widens after the bounded slice.</b>',
+    nodes:[
+      { id:'kingsears', ref:'King-Sears et al.', yr:2023, register:'postA3', gate:false, dots:0, dim:true, suppl:true,
+        standing:'landscape-informing · locator pending', venue:'Teaching and Teacher Education',
+        role:'<b>DP6 anchor (post-A3).</b> Universal Design for Learning &mdash; multiple means of expression; UDL as the equity frame (g = 0.43). <span class="conf">Discipline lifted at extraction.</span>' },
+      { id:'epstein', ref:'Epstein et al.', yr:2020, register:'postA3', gate:false, dots:0, dim:true, suppl:true,
+        standing:'not ranked · landscape-informing · locator pending', venue:'Int. J. Scholarship of Teaching &amp; Learning',
+        role:'<b>DP6 anchor (post-A3).</b> Multimodal expression &mdash; lets the most tacit operational know-how surface in non-text form, where prose would lose it. <span class="conf">Discipline lifted at extraction.</span>' },
+      { id:'zhangcapp', ref:'Zhang / Capp', yr:'2024', register:'postA3', gate:false, dots:0, dim:true, suppl:true,
+        standing:'landscape-informing · locator pending', venue:'Educational Psychology Review / IJIE',
+        role:'<b>DP6 counterweight (post-A3).</b> UDL critiques (Zhang 2024; Capp 2017) &mdash; the critical counterbalance to UDL claims; travels with DP6. <span class="conf">Discipline lifted at extraction.</span>' }
     ] }
 ];
 
@@ -678,22 +866,68 @@ const NODE_INDEX = {};
 DPS.forEach(dp => { NODE_INDEX[dp.id] = dp; dp.nodes.forEach(n => { n.dp = dp.id; NODE_INDEX[n.id] = n; }); });
 INSTRUMENTS.forEach(i => NODE_INDEX[i.id] = i);
 
+/* ---------- DISCIPLINE layer (Landscape Discipline Map v1) ----------
+   class/stream lifted from ea-skills frontmatter; family = synthesis roll-up.
+   SECI kept under Learning sciences (map §4 judgment call, A1B recommendation). */
+const FAMILIES = {
+  SM:  { label:'Strategic management & M&A', short:'Strategic mgmt & M&A', css:'sm' },
+  LS:  { label:'Learning sciences',          short:'Learning sciences',   css:'ls' },
+  KM:  { label:'Knowledge management',       short:'Knowledge mgmt',      css:'km' },
+  CTX: { label:'Context framing',            short:'Context framing',     css:'ctx' }
+};
+const FAMILY_ORDER = ['SM','LS','KM'];
+const DISCIPLINE = {
+  zollosingh:['SM','MandA-Learning'], haleblian:['SM','MandA-Learning'], trichterborn:['SM','MandA-Learning'],
+  schweizer:['SM','MandA-Serial'], laamanen:['SM','MandA-Serial'],
+  perusso:['LS','AuthenticLearning'], herrington:['LS','AuthenticLearning'], knowles:['LS','Andragogy'], lakkala:['LS','AuthenticLearning'],
+  bisra:['LS','GenerativeLearning'], fiorella:['LS','GenerativeLearning'], tannenbaum:['LS','GenerativeLearning'],
+  goffin:['LS','GenerativeLearning'], boldrini:['LS','GenerativeLearning'], bangert:['LS','GenerativeLearning'],
+  schon:['LS','Reflection'], boud:['LS','Reflection'],
+  vmb:['LS','InstructionalDesign'], vms:['LS','CognitiveLoad'], tetzlaff:['LS','CognitiveLoad'], salden:['LS','CognitiveLoad'], nievelstein:['LS','CognitiveLoad'],
+  markus:['KM','KnowledgeReuse'], szulanski:['KM','KnowledgeTransfer'], kasper:['KM','KnowledgeTransfer'],
+  riviere:['LS','TransferOfLearning'], lobato:['LS','TransferOfLearning'],
+  gourlay:['LS','SECI'], farnese:['LS','SECI'], taylorkroth:['LS','Andragogy'],
+  colman:['SM','MandA-Socio'], rouzies:['SM','MandA-Socio'], maynard:['CTX','—']
+};
+const STREAM_LABEL = {
+  'MandA-Learning':'M&A · organisational learning', 'MandA-Serial':'M&A · serial acquisition', 'MandA-Socio':'M&A · socio-relational',
+  'AuthenticLearning':'Authentic learning', 'Andragogy':'Andragogy', 'GenerativeLearning':'Generative learning', 'Reflection':'Reflection',
+  'InstructionalDesign':'Instructional design', 'CognitiveLoad':'Cognitive load', 'TransferOfLearning':'Transfer of learning', 'SECI':'SECI / externalisation',
+  'KnowledgeReuse':'Knowledge reuse', 'KnowledgeTransfer':'Knowledge transfer', '—':'Context framing'
+};
+Object.entries(DISCIPLINE).forEach(([id, arr]) => { const n = NODE_INDEX[id]; if (n){ n.family = arr[0]; n.stream = arr[1]; } });
+
 const $ = sel => document.querySelector(sel);
-const allNodeEls = [];
+const allNodeEls = [];      // pipeline-view node elements
+const dNodeEls = [];        // discipline-view node elements
+let layout = 'pipeline';
+const VIEW = {
+  pipeline:   { root:null, wrap:null, svg:null, els:allNodeEls },
+  discipline: { root:null, wrap:null, svg:null, els:dNodeEls }
+};
+const AV = () => VIEW[layout];
 
 /* ---------- detail panel ---------- */
 const pMeta = $('#pMeta'), pBody = $('#pBody');
 function dotStr(d){ return '●●●●'.slice(0, d) + '○○○○'.slice(0, 4 - d); }
+function famTag(n){
+  if (!n.family) return '';
+  const f = FAMILIES[n.family];
+  const st = (n.stream && n.stream !== '—') ? ` · ${STREAM_LABEL[n.stream] || n.stream}` : '';
+  return `<span class="famtag ${f.css}">${f.short}${st}</span>`;
+}
 
 function show(n){
   let cls = n.gate ? 'green' : (n.frame || n.dim || n.positioning || n.suppl || n.fenced) ? 'amber' : 'green';
   const dots = n.dots ? `<span class="dots">${dotStr(n.dots)}</span>` : '';
   pMeta.innerHTML = `<span class="rankchip ${cls}">${dots}${n.standing || ''}</span>`
-    + `<div class="reglab">${regLabel(n.register || (n.dp ? 'design' : ''))}${n.venue ? ' · ' + n.venue : ''}</div>`;
+    + `<div class="reglab">${regLabel(n.register || (n.dp ? 'design' : ''))}${n.venue ? ' · ' + n.venue : ''}</div>`
+    + (n.family ? `<div class="dislab">${famTag(n)}</div>` : '');
   pBody.innerHTML = `<p class="ttl">${n.ref} <span class="yr">${n.yr || ''}</span></p><p class="role">${n.role || ''}</p>`;
 }
 function showInstrument(i){
-  pMeta.innerHTML = `<span class="rankchip grey">environment-scan</span><div class="reglab">Problem register · grey-lit · ${i.owns}</div>`;
+  pMeta.innerHTML = `<span class="rankchip grey">environment-scan</span><div class="reglab">Problem register · grey-lit · ${i.owns}</div>`
+    + `<div class="dislab"><span class="famtag ctx">discipline n/a · analytic instrument</span></div>`;
   pBody.innerHTML = `<p class="ttl">${i.name} <span class="yr">${i.sub}</span></p><p class="role">${i.finding}</p>`;
 }
 function showGrey(g){
@@ -710,7 +944,8 @@ function regLabel(r){
 let activeEl = null;
 function setActive(el){ if (activeEl) activeEl.classList.remove('active'); activeEl = el; el.classList.add('active'); }
 
-function mkNode(n){
+function mkNode(n, list){
+  list = list || allNodeEls;
   const b = document.createElement('button');
   let kind = n.gate ? 'green' : 'amber';
   b.className = 'node ' + kind
@@ -719,6 +954,7 @@ function mkNode(n){
   b.dataset.id = n.id;
   b.dataset.register = n.register || (n.dp ? 'design' : '');
   b.dataset.gate = n.gate ? '1' : '0';
+  b.dataset.family = n.family || '';
   let dpset = new Set();
   if (n.dp) dpset.add(n.dp);
   (n.touch || []).forEach(t => dpset.add(t));
@@ -731,7 +967,7 @@ function mkNode(n){
   b.addEventListener('mouseenter', handler);
   b.addEventListener('click', handler);
   b.addEventListener('focus', handler);
-  allNodeEls.push(b);
+  list.push(b);
   return b;
 }
 
@@ -781,7 +1017,7 @@ function renderDesign(){
   const host = $('#designLanes');
   DPS.forEach(dp => {
     const lane = document.createElement('div');
-    lane.className = 'lane' + (dp.headline ? ' headline' : '');
+    lane.className = 'lane' + (dp.headline ? ' headline' : '') + (dp.postA3 ? ' postA3' : '');
     lane.dataset.lane = dp.id;
     const head = document.createElement('div');
     head.className = 'lane-head';
@@ -790,7 +1026,8 @@ function renderDesign(){
     head.dataset.gate = '0';
     head.dataset.dp = dp.id;
     head.innerHTML = `<div class="lane-id">${dp.num} · ${dp.tag}${dp.headline ? '<span class="hbadge">HEADLINE</span>' : ''}</div>`
-      + `<h3>${dp.title}</h3><p class="lane-gist">${dp.gist}</p>`;
+      + `<h3>${dp.title}</h3><p class="lane-gist">${dp.gist}</p>`
+      + (dp.id === 'dp3' ? `<div class="xdbadge"><span class="xd-ic">⇄</span> warranted from <b class="fx ls">Learning sciences</b> × <b class="fx sm">Strategic mgmt & M&A</b></div>` : '');
     head.addEventListener('mouseenter', () => { setActive(head); show(dp); });
     head.addEventListener('click', () => { setActive(head); show(dp); });
     allNodeEls.push(head);
@@ -806,24 +1043,16 @@ function renderDesign(){
 /* ============================================================
    SVG arc rendering
    ============================================================ */
-const svg = $('#links'), wrap = document.querySelector('.hscroll');
 function rectIn(parent, el){ const p = parent.getBoundingClientRect(), r = el.getBoundingClientRect();
   return { x:r.left - p.left + parent.scrollLeft, y:r.top - p.top + parent.scrollTop, w:r.width, h:r.height }; }
-function arcPath(a, b){
-  const A = rectIn(wrap, a), B = rectIn(wrap, b);
-  const x1 = A.x + A.w/2, y1 = A.y + A.h/2, x2 = B.x + B.w/2, y2 = B.y + B.h/2;
-  const mx = (x1 + x2)/2, my = (y1 + y2)/2;
-  const dx = x2 - x1, dy = y2 - y1, dist = Math.hypot(dx, dy);
-  const off = Math.min(120, dist * 0.22);
-  // perpendicular bow
-  const nx = -dy / (dist || 1), ny = dx / (dist || 1);
-  return `M ${x1.toFixed(1)} ${y1.toFixed(1)} Q ${(mx + nx*off).toFixed(1)} ${(my + ny*off).toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
-}
 let activeConvo = null, hoverId = null;
 const SVGNS = 'http://www.w3.org/2000/svg';
+let gradSeq = 0;
 
 /* edge index built once from every conversation */
 let ALL_EDGES = [], EDGE_BY_NODE = {}, RESTING = [];
+function isCross(e){ const a = NODE_INDEX[e.a], b = NODE_INDEX[e.b];
+  return a && b && a.family && b.family && a.family !== b.family; }
 function buildEdges(){
   Object.entries(CONVERSATIONS).forEach(([key, c]) => {
     c.arcs.forEach(([a, b, kind]) => {
@@ -838,23 +1067,51 @@ function buildEdges(){
 }
 
 function drawEdge(e, cls){
-  const A = document.querySelector(`[data-id="${e.a}"]`), B = document.querySelector(`[data-id="${e.b}"]`);
+  const view = AV();
+  const A = view.root.querySelector(`[data-id="${e.a}"]`), B = view.root.querySelector(`[data-id="${e.b}"]`);
   if (!A || !B || A.classList.contains('dim') || B.classList.contains('dim')) return;
+  const RA = rectIn(view.wrap, A), RB = rectIn(view.wrap, B);
+  const x1 = RA.x + RA.w/2, y1 = RA.y + RA.h/2, x2 = RB.x + RB.w/2, y2 = RB.y + RB.h/2;
+  const mx = (x1 + x2)/2, my = (y1 + y2)/2;
+  const dx = x2 - x1, dy = y2 - y1, dist = Math.hypot(dx, dy) || 1;
+  const off = Math.min(120, dist * 0.22);
+  const nx = -dy / dist, ny = dx / dist;
+  const d = `M ${x1.toFixed(1)} ${y1.toFixed(1)} Q ${(mx + nx*off).toFixed(1)} ${(my + ny*off).toFixed(1)}, ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  const cross = isCross(e);
   const p = document.createElementNS(SVGNS, 'path');
-  p.setAttribute('d', arcPath(A, B));
-  p.setAttribute('class', 'edge ' + e.kind + (e.chain ? ' chain' : '') + (e.hl ? ' hl' : '') + (cls ? ' ' + cls : ''));
-  svg.appendChild(p);
+  p.setAttribute('d', d);
+  p.setAttribute('class', 'edge ' + e.kind + (e.chain ? ' chain' : '') + (e.hl ? ' hl' : '') + (cross ? ' famcross' : '') + (cls ? ' ' + cls : ''));
+  if (cross){
+    // per-edge gradient: source family colour → target family colour (two literatures meeting)
+    let defs = view.svg.querySelector('defs');
+    if (!defs){ defs = document.createElementNS(SVGNS, 'defs'); view.svg.appendChild(defs); }
+    const gid = 'fg' + (gradSeq++);
+    const lg = document.createElementNS(SVGNS, 'linearGradient');
+    lg.setAttribute('id', gid); lg.setAttribute('gradientUnits', 'userSpaceOnUse');
+    lg.setAttribute('x1', x1.toFixed(1)); lg.setAttribute('y1', y1.toFixed(1));
+    lg.setAttribute('x2', x2.toFixed(1)); lg.setAttribute('y2', y2.toFixed(1));
+    const s1 = document.createElementNS(SVGNS, 'stop'); s1.setAttribute('offset', '0%');
+    s1.setAttribute('stop-color', `var(--fam-${FAMILIES[NODE_INDEX[e.a].family].css})`);
+    const s2 = document.createElementNS(SVGNS, 'stop'); s2.setAttribute('offset', '100%');
+    s2.setAttribute('stop-color', `var(--fam-${FAMILIES[NODE_INDEX[e.b].family].css})`);
+    lg.appendChild(s1); lg.appendChild(s2); defs.appendChild(lg);
+    p.setAttribute('stroke', `url(#${gid})`);
+  }
+  view.svg.appendChild(p);
 }
 
 function drawArcs(){
-  svg.innerHTML = '';
+  const view = AV();
+  const svg = view.svg, wrap = view.wrap;
+  if (!svg || !wrap) return;
+  svg.innerHTML = ''; gradSeq = 0;
   const w = wrap.scrollWidth, h = wrap.scrollHeight;
   svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
   svg.setAttribute('width', w); svg.setAttribute('height', h);
   svg.style.width = w + 'px'; svg.style.height = h + 'px';
   if (activeConvo){
     const c = CONVERSATIONS[activeConvo];
-    c.arcs.forEach(([a, b, kind]) => drawEdge({ a, b, kind, chain:!!c.chain, hl:!!c.headline }, 'focusedge'));
+    c.arcs.forEach(([a, b, kind]) => drawEdge({ a, b, kind, chain:!!c.chain, hl:!!c.headline, convo:activeConvo }, 'focusedge'));
     return;
   }
   if (hoverId && EDGE_BY_NODE[hoverId]){
@@ -864,22 +1121,22 @@ function drawArcs(){
   RESTING.forEach(e => drawEdge(e, 'resting'));
 }
 
-/* hover illuminate — only when no filter/convo is steering the view */
+/* hover illuminate — only when nothing else is steering the view */
 function illuminate(id){
-  if (activeConvo || focus !== 'all' || gateOn || regView !== 'both') return;
+  if (activeConvo || focus !== 'all' || gateOn || regView !== 'both' || famFocus !== 'all') return;
   const partners = new Set([id]);
   (EDGE_BY_NODE[id] || []).forEach(e => { partners.add(e.a); partners.add(e.b); });
-  allNodeEls.forEach(el => el.classList.toggle('hdim', !partners.has(el.dataset.id)));
+  AV().els.forEach(el => el.classList.toggle('hdim', !partners.has(el.dataset.id)));
 }
-function clearIlluminate(){ allNodeEls.forEach(el => el.classList.remove('hdim')); }
+function clearIlluminate(){ AV().els.forEach(el => el.classList.remove('hdim')); }
 
 /* ============================================================
    Filters / toggles
    ============================================================ */
-let focus = 'all', regView = 'both', gateOn = false;
+let focus = 'all', regView = 'both', gateOn = false, famFocus = 'all';
 
 function applyDim(){
-  allNodeEls.forEach(el => {
+  AV().els.forEach(el => {
     let lit = true;
     const reg = el.dataset.register, dp = (el.dataset.dp || '').split(',').filter(Boolean), gate = el.dataset.gate === '1';
     // focus
@@ -896,6 +1153,8 @@ function applyDim(){
       if (regView === 'problem') lit = (reg === 'problem' || reg === 'grey');
       else if (regView === 'design') lit = (reg === 'design' || reg === 'critical');
     }
+    // discipline focus
+    if (lit && famFocus !== 'all') lit = (el.dataset.family === famFocus);
     // gate highlight
     if (lit && gateOn) lit = gate;
     // active conversation overrides everything
@@ -909,7 +1168,12 @@ function applyDim(){
 function setFocus(f){
   focus = f;
   document.querySelectorAll('[data-focus]').forEach(c => c.classList.toggle('on', c.dataset.focus === f));
-  applyDim();
+  applyDim(); requestAnimationFrame(drawArcs);
+}
+function setFam(f){
+  famFocus = f;
+  document.querySelectorAll('[data-fam]').forEach(c => c.classList.toggle('on', c.dataset.fam === f));
+  applyDim(); requestAnimationFrame(drawArcs);
 }
 function setReg(v){
   regView = v;
@@ -930,53 +1194,139 @@ function setConvo(id){
 }
 
 /* ============================================================
+   Discipline (second) view — regroup the same nodes by literature
+   ============================================================ */
+function mkInstrumentChip(i){
+  const b = document.createElement('button');
+  b.className = 'node instrument-chip';
+  b.dataset.id = i.id; b.dataset.register = 'grey'; b.dataset.gate = '0'; b.dataset.dp = ''; b.dataset.family = '';
+  b.innerHTML = `<span class="rk" style="background:var(--grey)"></span><span class="ref">${i.name} <span class="yr">${i.sub}</span></span>`;
+  const h = () => { setActive(b); showInstrument(i); };
+  b.addEventListener('mouseenter', h); b.addEventListener('click', h); b.addEventListener('focus', h);
+  dNodeEls.push(b);
+  return b;
+}
+function renderDiscipline(){
+  const stack = $('#dstack');
+  const note = document.createElement('div');
+  note.className = 'dnote';
+  note.innerHTML = `<b>Read by research literature</b> — the same corpus regrouped by the field each paper comes from (EDGI902's native cut). The argument reading is one toggle away under <span class="kx">Layout · Pipeline</span>. The cross-disciplinary story is the lines that <b>span columns</b>: trace <span class="kx">cF ★</span> to watch <b>learning sciences</b> and <b>strategic management</b> converge on the same DP3 design move, and <span class="kx">cD</span> for learning sciences × knowledge management at DP4.`;
+  stack.appendChild(note);
+  const row = document.createElement('div'); row.className = 'drow';
+  const papers = [...PROBLEM, ...CRITICAL, ...POSTA3];
+  DPS.forEach(dp => dp.nodes.forEach(n => papers.push(n)));
+  FAMILY_ORDER.forEach(fk => {
+    const fam = FAMILIES[fk];
+    const inFam = papers.filter(p => p.family === fk);
+    if (!inFam.length) return;
+    const col = document.createElement('div');
+    col.className = 'dcol fam-' + fam.css;
+    col.innerHTML = `<div class="dcolhead"><span class="dsw ${fam.css}"></span>${fam.label}<span class="dct">${inFam.length}</span></div>`;
+    const streams = [];
+    inFam.forEach(p => { if (!streams.includes(p.stream)) streams.push(p.stream); });
+    streams.forEach(s => {
+      const sub = document.createElement('div'); sub.className = 'dsub';
+      sub.innerHTML = `<div class="dsubhead">${STREAM_LABEL[s] || s}</div>`;
+      const nd = document.createElement('div'); nd.className = 'dnodes';
+      inFam.filter(p => p.stream === s).forEach(p => nd.appendChild(mkNode(p, dNodeEls)));
+      sub.appendChild(nd); col.appendChild(sub);
+    });
+    row.appendChild(col);
+  });
+  // context / environment column (not a discipline)
+  const ctxCol = document.createElement('div');
+  ctxCol.className = 'dcol fam-ctx';
+  ctxCol.innerHTML = `<div class="dcolhead"><span class="dsw ctx"></span>Not a discipline<span class="dct"></span></div>`;
+  const ctxPapers = papers.filter(p => p.family === 'CTX');
+  if (ctxPapers.length){
+    const sub = document.createElement('div'); sub.className = 'dsub';
+    sub.innerHTML = `<div class="dsubhead">Context framing · non-gate</div>`;
+    const nd = document.createElement('div'); nd.className = 'dnodes';
+    ctxPapers.forEach(p => nd.appendChild(mkNode(p, dNodeEls)));
+    sub.appendChild(nd); ctxCol.appendChild(sub);
+  }
+  // post-A3 nodes whose discipline is not yet extracted (DP5 trust / DP6 UDL)
+  const pendPapers = papers.filter(p => !p.family);
+  if (pendPapers.length){
+    const sub = document.createElement('div'); sub.className = 'dsub';
+    sub.innerHTML = `<div class="dsubhead">Post-A3 · discipline at extraction</div>`;
+    const nd = document.createElement('div'); nd.className = 'dnodes';
+    pendPapers.forEach(p => nd.appendChild(mkNode(p, dNodeEls)));
+    sub.appendChild(nd); ctxCol.appendChild(sub);
+  }
+  const sub2 = document.createElement('div'); sub2.className = 'dsub';
+  sub2.innerHTML = `<div class="dsubhead">Environment scan · grey-lit · discipline n/a</div>`;
+  const nd2 = document.createElement('div'); nd2.className = 'dnodes';
+  INSTRUMENTS.forEach(i => nd2.appendChild(mkInstrumentChip(i)));
+  sub2.appendChild(nd2); ctxCol.appendChild(sub2);
+  row.appendChild(ctxCol);
+  stack.appendChild(row);
+}
+
+let pinStack = () => {};
+function setLayout(l){
+  if (layout === l) return;
+  layout = l;
+  VIEW.pipeline.root.hidden = (l !== 'pipeline');
+  VIEW.discipline.root.hidden = (l !== 'discipline');
+  document.querySelectorAll('[data-layout]').forEach(c => c.classList.toggle('on', c.dataset.layout === l));
+  applyDim();
+  // force a reflow of the newly-shown view so its .hscroll has real dimensions, then draw
+  // immediately (no rAF race) and again next frame once fonts/layout fully settle.
+  void AV().wrap.offsetWidth;
+  pinStack(); drawArcs();
+  requestAnimationFrame(() => { pinStack(); drawArcs(); });
+}
+
+/* ============================================================
    Boot
    ============================================================ */
 function boot(){
+  VIEW.pipeline.root = $('#pipelineView');    VIEW.pipeline.wrap = VIEW.pipeline.root.querySelector('.hscroll');      VIEW.pipeline.svg = $('#links');
+  VIEW.discipline.root = $('#disciplineView'); VIEW.discipline.wrap = VIEW.discipline.root.querySelector('.hscroll'); VIEW.discipline.svg = $('#dlinks');
+
   buildEdges();
   renderInstruments();
   renderList('#problemNodes', PROBLEM);
   renderDesign();
   renderList('#criticalNodes', CRITICAL);
   renderList('#postA3Nodes', POSTA3);
+  renderDiscipline();
 
   // gate readout
   $('#gateN').textContent = META.gate;
   $('#ft50N').textContent = META.ft50;
 
-  // focus chips
+  // chips
   document.querySelectorAll('[data-focus]').forEach(c => c.addEventListener('click', () => setFocus(c.dataset.focus)));
-  // register toggle
   document.querySelectorAll('[data-reg]').forEach(c => c.addEventListener('click', () => setReg(c.dataset.reg)));
-  // gate toggle
+  document.querySelectorAll('[data-fam]').forEach(c => c.addEventListener('click', () => setFam(c.dataset.fam)));
+  document.querySelectorAll('[data-layout]').forEach(c => c.addEventListener('click', () => setLayout(c.dataset.layout)));
   $('#gateToggle').addEventListener('click', () => {
     gateOn = !gateOn;
     $('#gateToggle').classList.toggle('on', gateOn);
     applyDim();
   });
-  // conversations
   document.querySelectorAll('[data-convo]').forEach(c => c.addEventListener('click', () => setConvo(c.dataset.convo)));
 
-  // hover-illuminate: any node lights its conversation partners + draws their arcs
-  wrap.addEventListener('mouseover', e => {
+  // hover-illuminate: any node lights its conversation partners + draws their arcs (either view)
+  const diagram = $('#diagram');
+  diagram.addEventListener('mouseover', e => {
     const el = e.target.closest('[data-id]');
-    if (!el || !wrap.contains(el)) return;
+    if (!el || !diagram.contains(el)) return;
     if (el.dataset.id === hoverId) return;
     hoverId = el.dataset.id;
     illuminate(hoverId);
     requestAnimationFrame(drawArcs);
   });
-  wrap.addEventListener('mouseleave', () => {
+  diagram.addEventListener('mouseleave', () => {
     hoverId = null; clearIlluminate(); requestAnimationFrame(drawArcs);
   });
 
-  // release on empty click
-  wrap.addEventListener('click', e => { if (e.target === wrap || e.target === svg) { /* keep */ } });
-
-  // pin the stack width to the flow row so the foundation fills it (not expands it)
+  // pin the pipeline stack width so the foundation fills it (not expands it)
   const flowRow = document.querySelector('.hstack .hrow');
   const hstack = document.querySelector('.hstack');
-  const pinStack = () => { if (flowRow && hstack){ hstack.style.width = ''; hstack.style.width = flowRow.scrollWidth + 'px'; } };
+  pinStack = () => { if (flowRow && hstack){ hstack.style.width = ''; hstack.style.width = flowRow.scrollWidth + 'px'; } };
 
   let raf;
   const redraw = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { pinStack(); drawArcs(); }); };
