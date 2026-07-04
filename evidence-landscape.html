@@ -304,6 +304,8 @@
     --fam-sm: oklch(0.64 0.14 256);   /* Strategic management & M&A — blue (aligns site navy) */
     --fam-ls: oklch(0.62 0.07 245);  /* Learning sciences — teal (aligns site design teal) */
     --fam-km: oklch(0.86 0.15 101);    /* Knowledge management — ochre */
+    --fam-lscm:oklch(0.64 0.13 150);   /* Logistics & supply chain management — green (Richey; new B4) */
+    --fam-csc: oklch(0.64 0.13 330);   /* Complex systems science — magenta (Scheffer; new B4) */
     --fam-ctx:oklch(0.62 0.012 250);   /* Context framing — warm grey (not a discipline) */
   }
   .lgd-lab{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted-2);}
@@ -312,17 +314,21 @@
   .node[data-family="SM"]{border-left-color:var(--fam-sm);}
   .node[data-family="LS"]{border-left-color:var(--fam-ls);}
   .node[data-family="KM"]{border-left-color:var(--fam-km);}
+  .node[data-family="LSCM"]{border-left-color:var(--fam-lscm);}
+  .node[data-family="CSC"]{border-left-color:var(--fam-csc);}
   .node[data-family="CTX"]{border-left-color:var(--fam-ctx);}
 
   /* family swatch + tag (detail panel, chips) */
   .fsw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none;}
-  .fsw.sm{background:var(--fam-sm);} .fsw.ls{background:var(--fam-ls);} .fsw.km{background:var(--fam-km);} .fsw.ctx{background:var(--fam-ctx);}
+  .fsw.sm{background:var(--fam-sm);} .fsw.ls{background:var(--fam-ls);} .fsw.km{background:var(--fam-km);} .fsw.lscm{background:var(--fam-lscm);} .fsw.csc{background:var(--fam-csc);} .fsw.ctx{background:var(--fam-ctx);}
   .famtag{display:inline-flex;align-items:center;gap:7px;font-family:"JetBrains Mono",monospace;font-size:10px;
     letter-spacing:0.02em;padding:3px 9px;border-radius:6px;border:1px solid;line-height:1.35;}
   .famtag::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor;}
   .famtag.sm{color:var(--fam-sm);border-color:color-mix(in oklch,var(--fam-sm) 40%,transparent);background:color-mix(in oklch,var(--fam-sm) 8%,var(--paper));}
   .famtag.ls{color:var(--fam-ls);border-color:color-mix(in oklch,var(--fam-ls) 40%,transparent);background:color-mix(in oklch,var(--fam-ls) 8%,var(--paper));}
   .famtag.km{color:var(--fam-km);border-color:color-mix(in oklch,var(--fam-km) 40%,transparent);background:color-mix(in oklch,var(--fam-km) 10%,var(--paper));}
+  .famtag.lscm{color:var(--fam-lscm);border-color:color-mix(in oklch,var(--fam-lscm) 40%,transparent);background:color-mix(in oklch,var(--fam-lscm) 8%,var(--paper));}
+  .famtag.csc{color:var(--fam-csc);border-color:color-mix(in oklch,var(--fam-csc) 40%,transparent);background:color-mix(in oklch,var(--fam-csc) 8%,var(--paper));}
   .famtag.ctx{color:oklch(0.50 0.012 250);border-color:var(--line-2);background:var(--grey-fill);}
   .dislab{margin-top:9px;}
 
@@ -332,6 +338,8 @@
   .chip.fam-chip[data-fam="SM"].on{background:var(--fam-sm);border-color:var(--fam-sm);}
   .chip.fam-chip[data-fam="LS"].on{background:var(--fam-ls);border-color:var(--fam-ls);}
   .chip.fam-chip[data-fam="KM"].on{background:var(--fam-km);border-color:var(--fam-km);}
+  .chip.fam-chip[data-fam="LSCM"].on{background:var(--fam-lscm);border-color:var(--fam-lscm);}
+  .chip.fam-chip[data-fam="CSC"].on{background:var(--fam-csc);border-color:var(--fam-csc);}
   .chip.fam-chip.on .fsw{background:#fff;}
 
   /* DP3 cross-disciplinary 'warranted-from' badge */
@@ -364,11 +372,13 @@
   .dcol.fam-sm{border-top-color:var(--fam-sm);}
   .dcol.fam-ls{border-top-color:var(--fam-ls);}
   .dcol.fam-km{border-top-color:var(--fam-km);}
+  .dcol.fam-lscm{border-top-color:var(--fam-lscm);}
+  .dcol.fam-csc{border-top-color:var(--fam-csc);}
   .dcol.fam-ctx{border-top-color:var(--fam-ctx);background:color-mix(in oklch,var(--grey) 3%,#fff);}
   .dcolhead{display:flex;align-items:center;gap:9px;font-family:"Fraunces",Georgia,serif;font-size:16px;
     color:#2a2a27;padding-bottom:11px;margin-bottom:2px;border-bottom:1px solid var(--line);}
   .dcolhead .dsw{width:12px;height:12px;border-radius:3px;flex:none;}
-  .dcolhead .dsw.sm{background:var(--fam-sm);} .dcolhead .dsw.ls{background:var(--fam-ls);} .dcolhead .dsw.km{background:var(--fam-km);} .dcolhead .dsw.ctx{background:var(--fam-ctx);}
+  .dcolhead .dsw.sm{background:var(--fam-sm);} .dcolhead .dsw.ls{background:var(--fam-ls);} .dcolhead .dsw.km{background:var(--fam-km);} .dcolhead .dsw.lscm{background:var(--fam-lscm);} .dcolhead .dsw.csc{background:var(--fam-csc);} .dcolhead .dsw.ctx{background:var(--fam-ctx);}
   .dcolhead .dct{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);font-weight:400;}
   .dsub{margin-top:13px;}
   .dsubhead{font-family:"JetBrains Mono",monospace;font-size:8.5px;letter-spacing:0.09em;text-transform:uppercase;
@@ -398,6 +408,11 @@
   .hingectx{margin-top:14px;}
   .hingectx .subhead{margin:0 0 8px;padding-top:0;border-top:0;}
   .hingectx .subhead .reg{padding:3px 9px;border-radius:5px;font-size:9.5px;letter-spacing:0.06em;}
+
+  /* ground · peer-reviewed ENV anchor (Richey; new B4) */
+  .groundanchor{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;}
+  .groundanchor .ga-lab{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fam-lscm);display:flex;flex-direction:column;gap:2px;}
+  .groundanchor .ga-sub{color:var(--muted-2);letter-spacing:0.06em;}
 
   /* how-to-use strip (instructional; mirrors the EDGI902 companion, in the clear-light palette) */
   .howto{
@@ -463,6 +478,8 @@
         <button class="chip fam-chip" data-fam="SM"><span class="fsw sm"></span>Strategic mgmt &amp; M&amp;A</button>
         <button class="chip fam-chip" data-fam="LS"><span class="fsw ls"></span>Learning sciences</button>
         <button class="chip fam-chip" data-fam="KM"><span class="fsw km"></span>Knowledge mgmt</button>
+        <button class="chip fam-chip" data-fam="LSCM"><span class="fsw lscm"></span>Logistics &amp; SCM</button>
+        <button class="chip fam-chip" data-fam="CSC"><span class="fsw csc"></span>Complex systems science</button>
       </div>
       <div class="trow">
         <span class="tlabel">Conversations</span>
@@ -489,6 +506,8 @@
           <span class="it"><span class="sw" style="background:var(--fam-sm)"></span>Strategic mgmt &amp; M&amp;A</span>
           <span class="it"><span class="sw" style="background:var(--fam-ls)"></span>Learning sciences</span>
           <span class="it"><span class="sw" style="background:var(--fam-km)"></span>Knowledge mgmt</span>
+          <span class="it"><span class="sw" style="background:var(--fam-lscm)"></span>Logistics &amp; SCM</span>
+          <span class="it"><span class="sw" style="background:var(--fam-csc)"></span>Complex systems science</span>
           <span class="it"><span class="sw" style="background:var(--grey)"></span>environment scan &middot; n/a</span>
           <span class="it"><span style="color:var(--green);font-size:8px;letter-spacing:1px">●●●●</span> tier (ABDC/SCImago)</span>
         </span>
@@ -562,7 +581,8 @@
 
         <!-- FOUNDATION · the environment scan as bedrock, full width -->
         <div class="foundation">
-          <div class="colhead"><span class="reg grey">The ground · environment scan</span> <span class="hint">industry &amp; background sources · the economy, industry and firm context the whole proposal rests on &mdash; not counted toward the literature gate</span></div>
+          <div class="colhead"><span class="reg grey">The ground · environment scan</span> <span class="hint">industry &amp; background sources · grey-lit not gate-counted &mdash; with one peer-reviewed anchor (Richey) that <b>is</b></span></div>
+          <div class="groundanchor"><span class="ga-lab">Peer-reviewed anchor<span class="ga-sub">gate-counted exception</span></span><div class="nodes" id="groundAnchor"></div></div>
           <div id="instruments"></div>
         </div>
 
@@ -579,8 +599,8 @@
     </div>
 
     <div class="bar">
-      <div class="gate"><span class="n" id="gateN">22</span>
-        <span class="lab"><b>journal articles clear the gate</b> &mdash; ABDC A*/A or SCImago Q1 (21 conservative; same-dataset relational pair counted once). Above the 12+ aim and &ge;10 floor.</span></div>
+      <div class="gate"><span class="n" id="gateN">24</span>
+        <span class="lab"><b>journal articles clear the gate</b> &mdash; ABDC A*/A or SCImago Q1 (23 conservative; same-dataset relational pair counted once). Above the 12+ aim and &ge;10 floor.</span></div>
       <div class="gate ft"><span class="n" id="ft50N">7</span>
         <span class="lab"><b>FT50</b> among them. Grey instruments are environment-scan &mdash; <b>not</b> gate-counted.</span></div>
     </div>
@@ -613,7 +633,7 @@
    grey sources appear (confidentiality discipline).
    ============================================================ */
 
-const META = { gate: 22, conservative: 21, ft50: 7 };
+const META = { gate: 24, conservative: 23, ft50: 7 };
 
 /* ---------- GREY SOURCES (external-anchored only) ----------
    Rendered as clickable chips inside the instrument lenses.
@@ -664,6 +684,14 @@ const INSTRUMENTS = [
     sources:['ibis5292b','jsa','isa','logihire'] }
 ];
 
+/* ---------- GROUND · peer-reviewed ENV anchor (Richey; gate-counted exception, new B4) ---------- */
+const GROUND_ANCHORS = [
+  { id:'richey', ref:'Richey et al.', yr:2023, register:'env', gate:true, ft50:false, dots:3,
+    standing:'ABDC A · SCImago Q1 · gate ✓', venue:'Journal of Business Logistics',
+    role:'The environment scan&rsquo;s one <b>peer-reviewed anchor</b> (the exception to &ldquo;not gate-counted&rdquo;): the generative-AI and automation wave reshaping logistics. Anchors PESTEL Technological; seeds the emerging SME-logistics-GenAI node. <span class="conf">ENV — the landscape&rsquo;s first Logistics &amp; supply chain management leg.</span>',
+    touch:[] }
+];
+
 /* ---------- PROBLEM REGISTER · academic M&A serial-learning cluster ---------- */
 const PROBLEM = [
   { id:'zollosingh', ref:'Zollo &amp; Singh', yr:2004, register:'problem', gate:true, ft50:true, dots:4,
@@ -690,9 +718,13 @@ const PROBLEM = [
 
 /* context framing — out of the bounded slice (cumulative-strain "why now") */
 const POSTA3 = [
+  { id:'scheffer', ref:'Scheffer et al.', yr:2012, register:'concept', gate:true, ft50:false, dots:3,
+    standing:'SCImago Q1 · Science · gate ✓', venue:'Science',
+    role:'The <b>peer-reviewed tipping-point anchor.</b> In tightly connected systems, repeated recovery from small shocks can mask how close a systemic threshold is (false resilience); once crossed, the shift is abrupt and hard to reverse &mdash; the peer-reviewed grounding for the preventive &ldquo;why act now.&rdquo; Used metaphorically via Maynard; the science ranks fragility, it does not predict. <span class="conf">Concept/lens &mdash; the landscape&rsquo;s first Complex systems science leg.</span>',
+    touch:[] },
   { id:'maynard', ref:'Maynard', yr:2020, register:'postA3', gate:false, ft50:false, dots:0, dim:true, frame:true,
     standing:'Book — not gate-eligible', venue:'Future Rising (Pippard&rsquo;s ladder)',
-    role:'<b>Context framing (concept-level).</b> Cumulative-strain motivation: complex systems look stable while accumulating stress, then tip non-linearly. The preventive &ldquo;why act now.&rdquo; Practitioner thought leadership &mdash; does not count toward the peer-reviewed gate.',
+    role:'<b>Context framing (concept-level).</b> The practitioner extension of Scheffer&rsquo;s science: complex systems look stable while accumulating stress, then tip non-linearly &mdash; the preventive &ldquo;why act now.&rdquo; Practitioner thought leadership &mdash; does not count toward the peer-reviewed gate.',
     touch:[] }
 ];
 
@@ -862,7 +894,7 @@ const CONVERSATIONS = {
 
 /* ---------- node index (id -> object) ---------- */
 const NODE_INDEX = {};
-[...PROBLEM, ...POSTA3, ...CRITICAL].forEach(n => NODE_INDEX[n.id] = n);
+[...PROBLEM, ...POSTA3, ...CRITICAL, ...GROUND_ANCHORS].forEach(n => NODE_INDEX[n.id] = n);
 DPS.forEach(dp => { NODE_INDEX[dp.id] = dp; dp.nodes.forEach(n => { n.dp = dp.id; NODE_INDEX[n.id] = n; }); });
 INSTRUMENTS.forEach(i => NODE_INDEX[i.id] = i);
 
@@ -873,9 +905,11 @@ const FAMILIES = {
   SM:  { label:'Strategic management & M&A', short:'Strategic mgmt & M&A', css:'sm' },
   LS:  { label:'Learning sciences',          short:'Learning sciences',   css:'ls' },
   KM:  { label:'Knowledge management',       short:'Knowledge mgmt',      css:'km' },
+  LSCM:{ label:'Logistics & supply chain management', short:'Logistics & SCM', css:'lscm' },
+  CSC: { label:'Complex systems science',    short:'Complex systems science', css:'csc' },
   CTX: { label:'Context framing',            short:'Context framing',     css:'ctx' }
 };
-const FAMILY_ORDER = ['SM','LS','KM'];
+const FAMILY_ORDER = ['SM','LS','KM','LSCM','CSC'];
 const DISCIPLINE = {
   zollosingh:['SM','MandA-Learning'], haleblian:['SM','MandA-Learning'], trichterborn:['SM','MandA-Learning'],
   schweizer:['SM','MandA-Serial'], laamanen:['SM','MandA-Serial'],
@@ -887,13 +921,15 @@ const DISCIPLINE = {
   markus:['KM','KnowledgeReuse'], szulanski:['KM','KnowledgeTransfer'], kasper:['KM','KnowledgeTransfer'],
   riviere:['LS','TransferOfLearning'], lobato:['LS','TransferOfLearning'],
   gourlay:['LS','SECI'], farnese:['LS','SECI'], taylorkroth:['LS','Andragogy'],
-  colman:['SM','MandA-Socio'], rouzies:['SM','MandA-Socio'], maynard:['CTX','—']
+  colman:['SM','MandA-Socio'], rouzies:['SM','MandA-Socio'], maynard:['CTX','—'],
+  richey:['LSCM','LSCM-AITech'], scheffer:['CSC','TippingPoint']
 };
 const STREAM_LABEL = {
   'MandA-Learning':'M&A · organisational learning', 'MandA-Serial':'M&A · serial acquisition', 'MandA-Socio':'M&A · socio-relational',
   'AuthenticLearning':'Authentic learning', 'Andragogy':'Andragogy', 'GenerativeLearning':'Generative learning', 'Reflection':'Reflection',
   'InstructionalDesign':'Instructional design', 'CognitiveLoad':'Cognitive load', 'TransferOfLearning':'Transfer of learning', 'SECI':'SECI / externalisation',
-  'KnowledgeReuse':'Knowledge reuse', 'KnowledgeTransfer':'Knowledge transfer', '—':'Context framing'
+  'KnowledgeReuse':'Knowledge reuse', 'KnowledgeTransfer':'Knowledge transfer',
+  'LSCM-AITech':'AI in logistics & SCM', 'TippingPoint':'Tipping points / critical transitions', '—':'Context framing'
 };
 Object.entries(DISCIPLINE).forEach(([id, arr]) => { const n = NODE_INDEX[id]; if (n){ n.family = arr[0]; n.stream = arr[1]; } });
 
@@ -937,6 +973,7 @@ function showGrey(g){
 function regLabel(r){
   return { problem:'Problem register · academic M&A', design:'Design register · the slice',
     critical:'Critical engagement · positioning', postA3:'Out of scope · post-A1B · landscape-informing',
+    concept:'Concept / lens · peer-reviewed anchor', env:'Environment scan · peer-reviewed anchor',
     grey:'Problem register · grey-lit' }[r] || '';
 }
 
@@ -1213,7 +1250,7 @@ function renderDiscipline(){
   note.innerHTML = `<b>Read by research literature</b> — the same corpus regrouped by the field each paper comes from (EDGI902's native cut). The argument reading is one toggle away under <span class="kx">Layout · Pipeline</span>. The cross-disciplinary story is the lines that <b>span columns</b>: trace <span class="kx">cF ★</span> to watch <b>learning sciences</b> and <b>strategic management</b> converge on the same DP3 design move, and <span class="kx">cD</span> for learning sciences × knowledge management at DP4.`;
   stack.appendChild(note);
   const row = document.createElement('div'); row.className = 'drow';
-  const papers = [...PROBLEM, ...CRITICAL, ...POSTA3];
+  const papers = [...PROBLEM, ...CRITICAL, ...POSTA3, ...GROUND_ANCHORS];
   DPS.forEach(dp => dp.nodes.forEach(n => papers.push(n)));
   FAMILY_ORDER.forEach(fk => {
     const fam = FAMILIES[fk];
@@ -1286,6 +1323,7 @@ function boot(){
   VIEW.discipline.root = $('#disciplineView'); VIEW.discipline.wrap = VIEW.discipline.root.querySelector('.hscroll'); VIEW.discipline.svg = $('#dlinks');
 
   buildEdges();
+  renderList('#groundAnchor', GROUND_ANCHORS);
   renderInstruments();
   renderList('#problemNodes', PROBLEM);
   renderDesign();

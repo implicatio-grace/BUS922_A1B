@@ -28,6 +28,7 @@
     --fam-km: oklch(0.86 0.15 101);
     --fam-rm: oklch(0.64 0.15 305);
     --fam-lscm: oklch(0.64 0.16 150);
+    --fam-csc: oklch(0.64 0.13 330);
     --fam-ctx: oklch(0.62 0.012 250);
   }
   *{box-sizing:border-box;}
@@ -124,6 +125,7 @@
   .glegend .s.hollow{border:1.5px solid #6f9f90;}
   .glegend .s.ft{background:#E9C46A;}
   .glegend .s.env{border:1.5px dashed #D8A794;}
+  .glegend .s.cl{border:1.5px solid #D9A6C8;}
   .lanescap{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;text-transform:uppercase;
     letter-spacing:0.12em;color:var(--muted-2);margin:24px 0 0;}
   .lanes{display:flex;flex-wrap:wrap;gap:18px 22px;margin:13px 0 0;}
@@ -131,10 +133,12 @@
     text-transform:uppercase;color:var(--muted-2);margin-bottom:10px;}
   .lane .lname b{color:#ffffff;font-weight:600;font-size:12px;}
   .lane.env .lname b{color:#D8A794;}
+  .lane.cl .lname b{color:#D9A6C8;}
   .ldots{display:flex;gap:6px;flex-wrap:wrap;max-width:114px;}
   .ldots .d{width:15px;height:15px;border-radius:50%;border:1.5px solid #6f9f90;box-sizing:border-box;}
   .ldots .d.ft{background:#E9C46A;border-color:#E9C46A;}
   .ldots .d.env{border:1.5px dashed #D8A794;background:transparent;}
+  .ldots .d.cl{border:1.5px solid #D9A6C8;background:transparent;}
   .gauge{margin:24px 0 0;}
   .gauge-track{position:relative;height:9px;border-radius:6px;background:#33312c;}
   .gauge-fill{position:absolute;left:0;top:0;bottom:0;width:91.6%;border-radius:6px;
@@ -168,12 +172,13 @@
   /* discipline facet on annotations (third facet: standing · role · discipline) */
   .disc{font-weight:500;}
   .disc::before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;background:currentColor;margin-right:5px;vertical-align:1px;}
-  .disc i{font-weight:400;font-style:italic;opacity:.9;}
+  .disc i{font-weight:400;font-style:italic;opacity:.9;padding-right:0.18em;}
   .disc.sm{color:var(--fam-sm);}
   .disc.ls{color:var(--fam-ls);}
   .disc.km{color:var(--fam-km);}
   .disc.rm{color:var(--fam-rm);}
   .disc.lscm{color:var(--fam-lscm);}
+  .disc.csc{color:var(--fam-csc);}
   .disc.ctx{color:oklch(0.50 0.012 250);}
   .disc.ctx::before{background:var(--fam-ctx);}
   .disc.tbc{color:var(--muted-2);}
@@ -192,7 +197,7 @@
     <p class="lede">Two lists. <b>References</b> are the sources cited in the visible site text. The <b>Bibliography</b> gathers what was consulted for the environment scan and reading lists but is not (yet) cited on the page. Legislation is split the same way. Each entry carries a one-line note on its standing, its role in the design, and — for scholarly sources — the research literature it comes from.</p>
 
     <div class="readout">
-      <span><b>52</b> references cited</span>
+      <span><b>53</b> references cited</span>
       <span><b>7</b> post-A3 (locators pending)</span>
       <span><b>37</b> consulted</span>
       <span><b>3</b> legislation</span>
@@ -201,18 +206,19 @@
 
     <div class="keynote">
       <div class="klab">How to read the annotations</div>
-      Each entry carries a standing + role note (<b>↳</b>): its <b>ABDC 2025</b> rating · <b>SCImago</b> quartile · <b>FT50</b> number where applicable; whether it counts toward the reference gate — <span class="g">✓</span> counts (ABDC A*/A <b>or</b> SCImago Q1, used as a gate source) · <b>✗</b> peer-reviewed but not gate-counted (fenced illustration / supplementary positioning / below-Q1) · <b>n/a</b> book, chapter, grey lit or legislation; and its role — <b>DP1–DP6</b> design principles · <b>PG</b> problem grounding · <b>ENV</b> environment scan · <b>MTH / M-</b> research-method legs. Grey-lit is rated on publisher authority, recency and independence, never gate-counted.
+      Each entry carries a standing + role note (<b>↳</b>): its <b>ABDC 2025</b> rating · <b>SCImago</b> quartile · <b>FT50</b> number where applicable; whether it counts toward the reference gate — <span class="g">✓</span> counts (ABDC A*/A <b>or</b> SCImago Q1, used as a gate source) · <b>✗</b> peer-reviewed but not gate-counted (fenced illustration / supplementary positioning / below-Q1) · <b>n/a</b> book, chapter, grey lit or legislation; and its role — <b>DP1–DP6</b> design principles · <b>PG</b> problem grounding · <b>ENV</b> environment scan · <b>concept/lens</b> supplementary lens · <b>MTH / M-</b> research-method legs. Grey-lit is rated on publisher authority, recency and independence, never gate-counted.
     </div>
 
     <div class="keynote">
       <div class="klab">The discipline facet — which literature each source comes from</div>
-      A third facet now closes each <b>scholarly</b> entry, restored from the evidence landscape's discipline layer: the <b>source-literature family</b> it belongs to, with its finer stream — e.g. <span class="disc ls">Learning sciences · <i>cognitive load</i></span>. This makes the cross-disciplinary spread legible here, the same reading the landscape renders as colour. Environment-scan grey-lit carries <b>no</b> discipline: it is data and analytic instruments, not a scholarly literature.
+      A third facet closes each <b>scholarly</b> entry: the <b>source-literature family</b> it belongs to, with its finer stream — e.g. <span class="disc ls">Learning sciences · <i>cognitive load</i></span>. This makes the cross-disciplinary spread legible here, the same reading the landscape renders as colour. Environment-scan grey-lit carries <b>no</b> discipline: it is data and analytic instruments, not a scholarly literature.
       <div class="famleg">
         <span class="fl"><span class="sw" style="background:var(--fam-sm)"></span>Strategic management &amp; M&amp;A</span>
         <span class="fl"><span class="sw" style="background:var(--fam-ls)"></span>Learning sciences</span>
         <span class="fl"><span class="sw" style="background:var(--fam-km)"></span>Knowledge management</span>
         <span class="fl"><span class="sw" style="background:var(--fam-rm)"></span>Research method</span>
         <span class="fl"><span class="sw" style="background:var(--fam-lscm)"></span>Logistics &amp; SCM</span>
+        <span class="fl"><span class="sw" style="background:var(--fam-csc)"></span>Complex systems science</span>
       </div>
     </div>
 
@@ -229,8 +235,8 @@
       <div class="gate">
         <div class="glab">Reference gate · cited works only</div>
         <div class="gate-top">
-          <div class="big">23</div>
-          <div class="bigcap">peer-reviewed articles clear the <b>HD reference gate</b> — ABDC A*/A or SCImago Q1, counted wherever they land</div>
+          <div class="big">24</div>
+          <div class="bigcap">peer-reviewed articles clear the <b>reference gate</b> — ABDC A*/A or SCImago Q1, counted wherever they land</div>
         </div>
 
         <div class="lanescap">Where they land · problem grounding → design pipeline → scan anchor</div>
@@ -259,26 +265,31 @@
             <div class="lname">ENV · <b>1</b></div>
             <div class="ldots"><span class="d env"></span></div>
           </div>
+          <div class="lane cl">
+            <div class="lname">concept/lens · <b>1</b></div>
+            <div class="ldots"><span class="d cl"></span></div>
+          </div>
         </div>
         <div class="glegend">
           <span class="lg"><span class="s ft"></span>FT50 top-tier — 7</span>
           <span class="lg"><span class="s hollow"></span>ABDC A*/A or Q1 — 15</span>
           <span class="lg"><span class="s env"></span>ENV anchor — 1</span>
+          <span class="lg"><span class="s cl"></span>concept/lens anchor — 1</span>
         </div>
 
         <div class="gauge">
           <div class="gauge-track">
-            <div class="gauge-fill" style="width:95.8%;"></div>
+            <div class="gauge-fill" style="width:100%;"></div>
             <div class="gauge-mark" style="left:41.7%;"></div>
             <div class="gauge-mark" style="left:50%;"></div>
           </div>
           <div class="gauge-labs">
             <span><b>10</b> floor</span>
             <span><b>12+</b> aim</span>
-            <span class="hit"><b>23</b> cleared</span>
+            <span class="hit"><b>24</b> cleared</span>
           </div>
         </div>
-        <p class="gate-foot">Conservative count <b>22</b> — the same-dataset relational pair (Colman &amp; Rouzies 2019 · Rouzies, Colman &amp; Angwin 2019) counts once; still well above the 12+ aim and ≥10 floor. A gate-qualifying article is counted wherever it lands, so the <b>ENV</b> lane holds <b>Richey et al. 2023</b>, the environment scan's one peer-reviewed anchor (ABDC A). The evidence-landscape's literature-only gate reads <b>22</b>; this full cited-work gate, adding that scan anchor, reads <b>23</b>. Books, chapters, legislation and grey-lit are citable but not gate-eligible; the Bibliography is excluded entirely.</p>
+        <p class="gate-foot">Conservative count <b>23</b> — the same-dataset relational pair (Colman &amp; Rouzies 2019 · Rouzies, Colman &amp; Angwin 2019) counts once; still well above the 12+ aim and ≥10 floor. A gate-qualifying article is counted wherever it lands: the <b>ENV</b> lane holds <b>Richey et al. 2023</b> (ABDC A) and the <b>concept/lens</b> slot holds <b>Scheffer et al. 2012</b> (SCImago Q1). Books, chapters, legislation and grey-lit are citable but not gate-eligible; the Bibliography is excluded entirely.</p>
       </div>
 
       <div class="list">
@@ -465,7 +476,7 @@
 
         <div class="entry">
           <p class="cite">Richey, RG Jr, Chowdhury, S, Davis-Sramek, B, Giannakis, M &amp; Dwivedi, YK 2023, 'Artificial intelligence in logistics and supply chain management: a primer and roadmap for research', <i>Journal of Business Logistics</i>, vol. 44, no. 4, pp. 532–549, doi: <a href="https://doi.org/10.1111/jbl.12364">10.1111/jbl.12364</a>.</p>
-          <p class="ann"><span class="t">↳</span> ABDC A · SCImago Q1 · not FT50 · Gate <span class="yes">✓</span> (ABDC A) — ENV (PESTEL Technological; the scan's one peer-reviewed anchor — the GenAI/automation wave reshaping logistics). <i>Editorial in Journal of Business Logistics; five authors, so "et al." in-text but all listed here per UOW.</i> <span class="disc lscm">Logistics &amp; SCM · <i>AI &amp; technology adoption</i></span></p>
+          <p class="ann"><span class="t">↳</span> ABDC A · SCImago Q1 · not FT50 · Gate <span class="yes">✓</span> (ABDC A) — ENV (PESTEL Technological; the scan's one peer-reviewed anchor — the GenAI/automation wave reshaping logistics). <i>Editorial in Journal of Business Logistics.</i> <span class="disc lscm">Logistics &amp; SCM · <i>AI &amp; technology adoption</i></span></p>
         </div>
 
         <div class="entry">
@@ -481,6 +492,11 @@
         <div class="entry">
           <p class="cite">Salden, RJCM, Aleven, V, Schwonke, R &amp; Renkl, A 2010, 'The expertise reversal effect and worked examples in tutored problem solving', <i>Instructional Science</i>, vol. 38, no. 3, pp. 289–307, doi: <a href="https://doi.org/10.1007/s11251-009-9107-8">10.1007/s11251-009-9107-8</a>.</p>
           <p class="ann"><span class="t">↳</span> ABDC not listed · SCImago Q1 · not FT50 · Gate <span class="yes">✓</span> — DP3 (implementable adaptive-fade mechanism). <span class="disc ls">Learning sciences · <i>cognitive load</i></span></p>
+        </div>
+
+        <div class="entry">
+          <p class="cite">Scheffer, M, Carpenter, SR, Lenton, TM, Bascompte, J, Brock, W, Dakos, V, van de Koppel, J, van de Leemput, IA, Levin, SA, van Nes, EH, Pascual, M &amp; Vandermeer, J 2012, 'Anticipating critical transitions', <i>Science</i>, vol. 338, no. 6105, pp. 344–348, doi: <a href="https://doi.org/10.1126/science.1225244">10.1126/science.1225244</a>.</p>
+          <p class="ann"><span class="t">↳</span> ABDC not listed · SCImago Q1 · not FT50 · Gate <span class="yes">✓</span> (SCImago Q1) — concept/lens (peer-reviewed anchor for the tipping-point supplementary lens under Maynard; the false-resilience / cumulative-strain grounding, cited once at the synthesis "why now"). <span class="disc csc">Complex systems science · <i>tipping points</i></span></p>
         </div>
 
         <div class="entry">
